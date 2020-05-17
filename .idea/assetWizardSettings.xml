@@ -61,7 +61,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="fontFamily" value="Source Sans Pro Black" />
-                                                <entry key="text" value="MOVIEDB" />
+                                                <entry key="text" value="FLIXDB" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -72,7 +72,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="TEXT" />
-                                      <entry key="outputName" value="ic_moviedb" />
+                                      <entry key="outputName" value="ic_flixdb" />
                                       <entry key="theme" value="HOLO_DARK" />
                                       <entry key="themeColor" value="ffffff" />
                                     </map>

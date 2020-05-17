@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null)
             getSupportActionBar().setDisplayShowTitleEnabled(false);
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_moviedb, null));
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_flixdb, null));
     }
 
     @Override
