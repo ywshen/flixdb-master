@@ -6,6 +6,7 @@ import com.pushpal.popularmoviesstage1.model.MovieResponse;
 import com.pushpal.popularmoviesstage1.model.MovieReviewResponse;
 import com.pushpal.popularmoviesstage1.model.MovieTrailerResponse;
 import com.pushpal.popularmoviesstage1.model.Person;
+import com.pushpal.popularmoviesstage1.model.SearchResponse;
 import com.pushpal.popularmoviesstage1.utilities.Constants;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import retrofit2.http.Query;
 
 public interface RESTClientInterface {
     @GET(Constants.SEARCH_URL)
-
+    Call<SearchResponse> getMultiSearch(@Query("api_key") String apiKey, @Query("query") String query, @Query("page") int page);
 
     @GET(Constants.POPULAR_MOVIES_URL)
     Call<MovieResponse> getPopularMovies(@Query("api_key") String apiKey, @Query("page") int page);
