@@ -16,6 +16,9 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface RESTClientInterface {
+    @GET(Constants.SEARCH_URL)
+
+
     @GET(Constants.POPULAR_MOVIES_URL)
     Call<MovieResponse> getPopularMovies(@Query("api_key") String apiKey, @Query("page") int page);
 
@@ -48,4 +51,6 @@ public interface RESTClientInterface {
 
     @GET(Constants.PERSON_URL)
     Call<Person> getPersonDetails(@Path("person_id") int personId, @Query("api_key") String apiKey);
+
+
 }
