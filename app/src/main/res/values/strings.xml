@@ -8,6 +8,7 @@
     <string name="action_most_popular">Most Popular</string>
     <string name="action_top_rated">Top Rated</string>
     <string name="action_favourite">Favourites</string>
+    <string name ="action_search">Search</string>
     <string name="category">Choose Category</string>
     <string name="votes">votes</string>
     <string name="overview">Overview</string>

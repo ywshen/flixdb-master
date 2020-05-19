@@ -6,6 +6,7 @@ public class Constants {
     // Constants of The Movie Database API
     public static final String API_KEY = BuildConfig.MOVIE_DB_API_KEY;
     public static final String BASE_URL = "https://api.themoviedb.org/3/";
+    public static final String SEARCH_URL = "search/multi";
     public static final String POPULAR_MOVIES_URL = "movie/popular";
     public static final String TOP_RATED_MOVIES_URL = "movie/top_rated";
     public static final String UPCOMING_MOVIES_URL = "movie/upcoming";
@@ -33,6 +34,7 @@ public class Constants {
     public static final String CATEGORY_MOST_POPULAR = "Most Popular";
     public static final String CATEGORY_TOP_RATED = "Top Rated";
     public static final String CATEGORY_FAVOURITE = "Favourite";
+    public static final String CATEGORY_SEARCH = "Search";
 
     // Grid arrangement types
     public static final String ARRANGEMENT_COMPACT = "compact";

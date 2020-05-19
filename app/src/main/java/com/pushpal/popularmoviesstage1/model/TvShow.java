@@ -71,6 +71,7 @@ public class TvShow implements Parcelable {
     public TvShow(String posterPath, String overview, String firstAirDate, Integer id,
                   String originalName, String originalLanguage, String name, String backdropPath, Double popularity,
                   Integer voteCount, Double voteAverage, Integer numberOfSeasons, Integer numberOfEpisodes) {
+        this.posterPath = posterPath;
         this.overview = overview;
         this.firstAirDate = firstAirDate;
         this.id = id;
