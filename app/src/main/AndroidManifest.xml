@@ -30,6 +30,9 @@
         </receiver>
 
         <activity android:name=".activity.DetailsActivity" />
+        <activity android:name=".activity.SearchActivity"/>
+        <activity android:name=".activity.TvActivity" />
+        <activity android:name=".activity.TvDetailsActivity" />
         <activity
             android:name=".activity.CastActivity"
             android:label="@string/cast" />

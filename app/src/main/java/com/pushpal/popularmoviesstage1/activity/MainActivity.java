@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements
     ImageView topRatedIcon;
     @BindView(R.id.iv_favourite_icon)
     ImageView favouriteIcon;
+    @BindView(R.id.iv_search_icon)
+    ImageView searchIcon;
     private MainViewModel mMainViewModel;
     private GridAutoFitLayoutManager mLayoutManager;
     private MovieAdapter mAdapter;
@@ -466,6 +468,12 @@ public class MainActivity extends AppCompatActivity implements
         mRecyclerView.scheduleLayoutAnimation();
     }
 
+    @OnClick(R.id.ll_search)
+    public void onSearchSelected() {
+        Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+        MainActivity.this.startActivity(intent);
+    }
+
     private void resetAndSetIconFilters(String sortCategory) {
         popularIcon.setColorFilter(getResources().getColor(R.color.colorIconGrey));
         topRatedIcon.setColorFilter(getResources().getColor(R.color.colorIconGrey));
@@ -494,14 +502,8 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_view_type) {
-            mViewToggle = !mViewToggle;
-            if (mViewToggle) {
-                //rearrangeRecyclerView(Constants.ARRANGEMENT_COZY);
-                //item.setIcon(ContextCompat.getDrawable(this, R.drawable.view_small_icon));
-            } else {
-                //rearrangeRecyclerView(Constants.ARRANGEMENT_COMPACT);
-                //item.setIcon(ContextCompat.getDrawable(this, R.drawable.view_large_icon));
-            }
+            Intent intent = new Intent(MainActivity.this, TvActivity.class);
+            MainActivity.this.startActivity(intent);
         }
         return true;
     }

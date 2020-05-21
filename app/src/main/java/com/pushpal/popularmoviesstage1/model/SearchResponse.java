@@ -8,7 +8,7 @@ public class SearchResponse {
     @SerializedName("page")
     private int page;
     @SerializedName("results")
-    private List<Movie> results;
+    private List<Search> results;
     @SerializedName("total_results")
     private int totalResults;
     @SerializedName("total_pages")
@@ -22,11 +22,11 @@ public class SearchResponse {
         this.page = page;
     }
 
-    public List<Movie> getResults() {
+    public List<Search> getResults() {
         return results;
     }
 
-    public void setResults(List<Movie> results) {
+    public void setResults(List<Search> results) {
         this.results = results;
     }
 
