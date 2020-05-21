@@ -118,6 +118,8 @@ public class SearchActivity extends AppCompatActivity implements
             @Override
             public boolean onQueryTextSubmit(String query) {
                 searchQuery = query;
+                resetData();
+                fetchSearches(mCallPage, searchQuery);
                 return true;
             }
 
