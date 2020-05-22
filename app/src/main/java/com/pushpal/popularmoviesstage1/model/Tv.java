@@ -12,16 +12,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @Entity(tableName = "tvshows")
-public class TvShow implements Parcelable {
-    public static final Creator<TvShow> CREATOR = new Creator<TvShow>() {
+public class Tv implements Parcelable {
+    public static final Creator<Tv> CREATOR = new Creator<Tv>() {
         @Override
-        public TvShow createFromParcel(Parcel in) {
-            return new TvShow(in);
+        public Tv createFromParcel(Parcel in) {
+            return new Tv(in);
         }
 
         @Override
-        public TvShow[] newArray(int size) {
-            return new TvShow[size];
+        public Tv[] newArray(int size) {
+            return new Tv[size];
         }
     };
     @PrimaryKey
@@ -68,9 +68,9 @@ public class TvShow implements Parcelable {
     @SerializedName("number_of_seasons")
     private Integer numberOfSeasons;
 
-    public TvShow(String posterPath, String overview, String firstAirDate, Integer id,
-                  String originalName, String originalLanguage, String name, String backdropPath, Double popularity,
-                  Integer voteCount, Double voteAverage, Integer numberOfSeasons, Integer numberOfEpisodes) {
+    public Tv(String posterPath, String overview, String firstAirDate, Integer id,
+              String originalName, String originalLanguage, String name, String backdropPath, Double popularity,
+              Integer voteCount, Double voteAverage, Integer numberOfSeasons, Integer numberOfEpisodes) {
         this.posterPath = posterPath;
         this.overview = overview;
         this.firstAirDate = firstAirDate;
@@ -87,9 +87,9 @@ public class TvShow implements Parcelable {
     }
 
     @Ignore
-    public TvShow(String posterPath, String overview, String firstAirDate, List<Integer> genreIds, Integer id,
-                  String originalName, String originalLanguage, String name, String backdropPath, Double popularity,
-                  Integer voteCount, Double voteAverage, Integer numberOfSeasons, Integer numberOfEpisodes) {
+    public Tv(String posterPath, String overview, String firstAirDate, List<Integer> genreIds, Integer id,
+              String originalName, String originalLanguage, String name, String backdropPath, Double popularity,
+              Integer voteCount, Double voteAverage, Integer numberOfSeasons, Integer numberOfEpisodes) {
         this.posterPath = posterPath;
         this.overview = overview;
         this.firstAirDate = firstAirDate;
@@ -106,7 +106,7 @@ public class TvShow implements Parcelable {
         this.numberOfEpisodes = numberOfEpisodes;
     }
 
-    private TvShow(Parcel in) {
+    private Tv(Parcel in) {
         posterPath = in.readString();
         overview = in.readString();
         firstAirDate = in.readString();
