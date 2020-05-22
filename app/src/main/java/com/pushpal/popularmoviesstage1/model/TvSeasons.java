@@ -25,6 +25,7 @@ public class TvSeasons implements Parcelable {
             return new TvSeasons[size];
         }
     };
+    @PrimaryKey
     @ColumnInfo(name = "id")
     @SerializedName("id")
     private Integer id;
