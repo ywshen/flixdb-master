@@ -507,7 +507,7 @@ public class TvActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_view_type) {
-            Intent intent = new Intent(TvActivity.this, TvActivity.class);
+            Intent intent = new Intent(TvActivity.this, MainActivity.class);
             TvActivity.this.startActivity(intent);
         }
         return true;
