@@ -7,8 +7,10 @@ import com.pushpal.popularmoviesstage1.model.MovieReviewResponse;
 import com.pushpal.popularmoviesstage1.model.MovieTrailerResponse;
 import com.pushpal.popularmoviesstage1.model.Person;
 import com.pushpal.popularmoviesstage1.model.SearchResponse;
+import com.pushpal.popularmoviesstage1.model.TvCreditResponse;
 import com.pushpal.popularmoviesstage1.model.TvLang;
 import com.pushpal.popularmoviesstage1.model.TvResponse;
+import com.pushpal.popularmoviesstage1.model.TvReviewResponse;
 import com.pushpal.popularmoviesstage1.utilities.Constants;
 
 import java.util.List;
@@ -49,11 +51,17 @@ public interface RESTClientInterface {
     @GET(Constants.CREDITS_URL)
     Call<MovieCreditResponse> getCredits(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
+    @GET(Constants.TV_CREDIT_URL)
+    Call<TvCreditResponse> getTvCredits(@Path("tv_id") int tvId, @Query("api_key") String apiKey);
+
     @GET(Constants.TRAILERS_URL)
     Call<MovieTrailerResponse> getTrailers(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
     @GET(Constants.REVIEWS_URL)
     Call<MovieReviewResponse> getReviews(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+
+    @GET(Constants.TV_REVIEWS_URL)
+    Call<TvReviewResponse> getTvReviews(@Path("tv_id") int tvId, @Query("api_key") String apiKey);
 
     @GET(Constants.PERSON_URL)
     Call<Person> getPersonDetails(@Path("person_id") int personId, @Query("api_key") String apiKey);

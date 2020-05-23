@@ -25,9 +25,9 @@ public class TvCast {
     private String profilePath;
 
 
-    public String getCharacter() { return character; }
+    public String getCharacterName() { return character; }
 
-    public void setCharacter(String character) { this.character = character; }
+    public void setCharacterName(String character) { this.character = character; }
 
     public String getCreditId() { return creditId; }
 
@@ -49,9 +49,9 @@ public class TvCast {
 
     public void setOrder(int order) { this.order = order; }
 
-    public String getProfilePath() { return profilePath; }
+    public String getProfileImagePath() { return profilePath; }
 
-    public void setProfilePath(String profilePath) {
+    public void setProfileImagePath(String profilePath) {
         this.profilePath = profilePath;
     }
 }
