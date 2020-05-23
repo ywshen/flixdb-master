@@ -8,7 +8,9 @@ public class Constants {
     public static final String BASE_URL = "https://api.themoviedb.org/3/";
     public static final String SEARCH_URL = "search/multi";
     public static final String POPULAR_MOVIES_URL = "movie/popular";
+    public static final String POPULAR_TVS_URL = "tv/popular";
     public static final String TOP_RATED_MOVIES_URL = "movie/top_rated";
+    public static final String TOP_RATED_TVS_URL = "tv/top_rated";
     public static final String UPCOMING_MOVIES_URL = "movie/upcoming";
     public static final String NOW_PLAYING_MOVIES_URL = "movie/now_playing";
     public static final String LATEST_MOVIES_URL = "movie/latest";
@@ -48,6 +50,8 @@ public class Constants {
 
     public static final String EXTRA_MOVIE_ITEM = "movie_image_url";
     public static final String EXTRA_MOVIE_IMAGE_TRANSITION_NAME = "movie_image_transition_name";
+    public static final String EXTRA_TV_ITEM = "tv_image_url";
+    public static final String EXTRA_TV_IMAGE_TRANSITION_NAME = "tv_image_transition_name";
 
     public static final String EXTRA_PERSON_ITEM = "person";
 

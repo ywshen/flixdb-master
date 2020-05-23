@@ -133,7 +133,7 @@ public class TvEpisodes implements Parcelable{
            parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
-            parcel.writeInt(voteCount);
+            parcel.writeInt(voteCount );
         }
     }
 }

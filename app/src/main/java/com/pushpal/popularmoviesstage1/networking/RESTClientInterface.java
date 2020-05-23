@@ -7,6 +7,8 @@ import com.pushpal.popularmoviesstage1.model.MovieReviewResponse;
 import com.pushpal.popularmoviesstage1.model.MovieTrailerResponse;
 import com.pushpal.popularmoviesstage1.model.Person;
 import com.pushpal.popularmoviesstage1.model.SearchResponse;
+import com.pushpal.popularmoviesstage1.model.TvLang;
+import com.pushpal.popularmoviesstage1.model.TvResponse;
 import com.pushpal.popularmoviesstage1.utilities.Constants;
 
 import java.util.List;
@@ -41,6 +43,9 @@ public interface RESTClientInterface {
     @GET(Constants.LANGUAGES)
     Call<List<MovieLang>> getLanguages(@Query("api_key") String apiKey);
 
+    @GET(Constants.LANGUAGES)
+    Call<List<TvLang>> getTvLanguages(@Query("api_key") String apiKey);
+
     @GET(Constants.CREDITS_URL)
     Call<MovieCreditResponse> getCredits(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
 
@@ -52,6 +57,12 @@ public interface RESTClientInterface {
 
     @GET(Constants.PERSON_URL)
     Call<Person> getPersonDetails(@Path("person_id") int personId, @Query("api_key") String apiKey);
+
+    @GET(Constants.POPULAR_TVS_URL)
+    Call<TvResponse> getPopularTvs(@Query("api_key") String apiKey, @Query("page") int page);
+
+    @GET(Constants.TOP_RATED_TVS_URL)
+    Call<TvResponse> getTopRatedTvs(@Query("api_key") String apiKey, @Query("page") int page);
 
 
 }
