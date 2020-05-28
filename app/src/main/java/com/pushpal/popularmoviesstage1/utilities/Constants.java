@@ -19,6 +19,7 @@ public class Constants {
     public static final String CREDITS_URL = "movie/{movie_id}/credits";
     public static final String TV_CREDIT_URL = "tv/{tv_id}/credits";
     public static final String TRAILERS_URL = "movie/{movie_id}/videos";
+    public static final String VIDEO_URL = "tv/{tv_id}/videos";
     public static final String REVIEWS_URL = "movie/{movie_id}/reviews";
     public static final String TV_REVIEWS_URL = "tv/{tv_id}/reviews";
     public static final String PERSON_URL = "person/{person_id}";

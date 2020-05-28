@@ -37,9 +37,6 @@ public class Tv implements Parcelable {
     @ColumnInfo(name = "first_air_date")
     @SerializedName("first_air_date")
     private String firstAirDate;
-    @ColumnInfo(name = "genre_ids")
-    @SerializedName("genre_ids")
-    private List<Integer> genreIds;
     @ColumnInfo(name = "original_name")
     @SerializedName("original_name")
     private String originalName;
@@ -82,28 +79,8 @@ public class Tv implements Parcelable {
         this.popularity = popularity;
         this.voteCount = voteCount;
         this.voteAverage = voteAverage;
-        this.numberOfSeasons = numberOfSeasons;
-        this.numberOfEpisodes = numberOfEpisodes;
-    }
-
-    @Ignore
-    public Tv(String posterPath, String overview, String firstAirDate, List<Integer> genreIds, Integer id,
-              String originalName, String originalLanguage, String name, String backdropPath, Double popularity,
-              Integer voteCount, Double voteAverage, Integer numberOfSeasons, Integer numberOfEpisodes) {
-        this.posterPath = posterPath;
-        this.overview = overview;
-        this.firstAirDate = firstAirDate;
-        this.genreIds = genreIds;
-        this.id = id;
-        this.originalName = originalName;
-        this.originalLanguage = originalLanguage;
-        this.name = name;
-        this.backdropPath = backdropPath;
-        this.popularity = popularity;
-        this.voteCount = voteCount;
-        this.voteAverage = voteAverage;
-        this.numberOfSeasons = numberOfSeasons;
-        this.numberOfEpisodes = numberOfEpisodes;
+        //this.numberOfSeasons = numberOfSeasons;
+        //this.numberOfEpisodes = numberOfEpisodes;
     }
 
     private Tv(Parcel in) {
@@ -140,11 +117,11 @@ public class Tv implements Parcelable {
         } else {
             numberOfSeasons = in.readInt();
         }
-        if (in.readByte() == 0) {
+        /*if (in.readByte() == 0) {
             numberOfEpisodes = null;
         } else {
             numberOfEpisodes = in.readInt();
-        }
+        }*/
     }
 
     public String getPosterPath() {
@@ -169,14 +146,6 @@ public class Tv implements Parcelable {
 
     public void setFirstAirDate(String firstAirDate) {
         this.firstAirDate = firstAirDate;
-    }
-
-    public List<Integer> getGenreIds() {
-        return genreIds;
-    }
-
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
     }
 
     public Integer getId() {
@@ -297,7 +266,7 @@ public class Tv implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(voteAverage);
         }
-        if (numberOfSeasons == null) {
+       /* if (numberOfSeasons == null) {
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
@@ -308,6 +277,6 @@ public class Tv implements Parcelable {
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(numberOfEpisodes);
-        }
+        }*/
     }
 }

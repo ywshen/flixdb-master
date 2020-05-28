@@ -19,8 +19,6 @@ public class SearchViewModel extends AndroidViewModel {
 
     public SearchViewModel(@NonNull Application application) {
         super(application);
-
-        MovieDatabase movieDatabase = MovieDatabase.getInstance(this.getApplication());
     }
 
     public List<Search> getSearches() {

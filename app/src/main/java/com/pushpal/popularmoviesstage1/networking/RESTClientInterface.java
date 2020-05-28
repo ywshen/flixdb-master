@@ -11,6 +11,7 @@ import com.pushpal.popularmoviesstage1.model.TvCreditResponse;
 import com.pushpal.popularmoviesstage1.model.TvLang;
 import com.pushpal.popularmoviesstage1.model.TvResponse;
 import com.pushpal.popularmoviesstage1.model.TvReviewResponse;
+import com.pushpal.popularmoviesstage1.model.TvVideoResponse;
 import com.pushpal.popularmoviesstage1.utilities.Constants;
 
 import java.util.List;
@@ -56,6 +57,9 @@ public interface RESTClientInterface {
 
     @GET(Constants.TRAILERS_URL)
     Call<MovieTrailerResponse> getTrailers(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+
+    @GET(Constants.VIDEO_URL)
+    Call<TvVideoResponse> getVideos(@Path("tv_id") int tvId, @Query("api_key") String apiKey);
 
     @GET(Constants.REVIEWS_URL)
     Call<MovieReviewResponse> getReviews(@Path("movie_id") int movieId, @Query("api_key") String apiKey);

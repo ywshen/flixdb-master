@@ -22,10 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pushpal.popularmoviesstage1.R;
-import com.pushpal.popularmoviesstage1.adapter.CastAdapter;
-import com.pushpal.popularmoviesstage1.adapter.ReviewAdapter;
 import com.pushpal.popularmoviesstage1.adapter.TvCastAdapter;
 import com.pushpal.popularmoviesstage1.adapter.TvReviewAdapter;
+import com.pushpal.popularmoviesstage1.adapter.VideoAdapter;
 import com.pushpal.popularmoviesstage1.database.AppExecutors;
 import com.pushpal.popularmoviesstage1.database.TvDatabase;
 import com.pushpal.popularmoviesstage1.model.Tv;
@@ -33,6 +32,8 @@ import com.pushpal.popularmoviesstage1.model.TvCast;
 import com.pushpal.popularmoviesstage1.model.TvCreditResponse;
 import com.pushpal.popularmoviesstage1.model.TvReview;
 import com.pushpal.popularmoviesstage1.model.TvReviewResponse;
+import com.pushpal.popularmoviesstage1.model.TvVideoResponse;
+import com.pushpal.popularmoviesstage1.model.TvVideos;
 import com.pushpal.popularmoviesstage1.networking.RESTClient;
 import com.pushpal.popularmoviesstage1.networking.RESTClientInterface;
 import com.pushpal.popularmoviesstage1.utilities.Constants;
@@ -102,7 +103,8 @@ public class TvDetailsActivity extends AppCompatActivity {
             tv = extras.getParcelable(Constants.EXTRA_MOVIE_ITEM);
 
         if (tv != null) {
-            fetchCredits(tv.getId());
+            fetchTvCredits(tv.getId());
+            fetchTrailers(tv.getId());
             fetchReviews(tv.getId());
 
             tvName.setText(tv.getName());
@@ -136,7 +138,7 @@ public class TvDetailsActivity extends AppCompatActivity {
                         }
                     });
 
-            if (TvUtils.isFavourite(tv))
+            if ( TvUtils.isFavourite(tv))
                 likeButton.setChecked(true);
 
             generateImageColor(imageURL);
@@ -222,7 +224,7 @@ public class TvDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void fetchCredits(int tvId) {
+    private void fetchTvCredits(int tvId) {
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
         Call<TvCreditResponse> call = restClientInterface.getTvCredits(tvId, Constants.API_KEY);
 
@@ -236,7 +238,7 @@ public class TvDetailsActivity extends AppCompatActivity {
                     if (statusCode == 200) {
                         if (response.body() != null) {
                             TvCreditResponse tvCreditResponse = response.body();
-                            List<TvCast> casts = tvCreditResponse != null ? tvCreditResponse.getCast() : null;
+                            List<TvCast> tvCasts = tvCreditResponse != null ? tvCreditResponse.getCast() : null;
 
                             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(TvDetailsActivity.this,
                                     LinearLayoutManager.HORIZONTAL,
@@ -244,13 +246,53 @@ public class TvDetailsActivity extends AppCompatActivity {
 
                             castRecyclerView.setLayoutManager(layoutManager);
                             castRecyclerView.setHasFixedSize(true);
-                            castRecyclerView.setAdapter(new TvCastAdapter(casts));
+                            castRecyclerView.setAdapter(new TvCastAdapter(tvCasts));
                         }
                     }
                 }
 
                 @Override
                 public void onFailure(@NonNull Call<TvCreditResponse> call, @NonNull Throwable throwable) {
+                    // Log error here since request failed
+                    Log.e(TAG, throwable.toString());
+                }
+            });
+        }
+    }
+
+    private void fetchTrailers(int tvId) {
+        RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
+        Call<TvVideoResponse> call = restClientInterface.getVideos(tvId, Constants.API_KEY);
+
+        if (call != null) {
+            call.enqueue(new retrofit2.Callback<TvVideoResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<TvVideoResponse> call,
+                                       @NonNull Response<TvVideoResponse> response) {
+                    int statusCode = response.code();
+
+                    if (statusCode == 200) {
+                        if (response.body() != null) {
+                            TvVideoResponse tvVideoResponse = response.body();
+                            List<TvVideos> videos = tvVideoResponse != null ? tvVideoResponse.getVideos() : null;
+
+                            if (videos != null && videos.size() > 0) {
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(TvDetailsActivity.this,
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false);
+
+                                trailerRecyclerView.setLayoutManager(layoutManager);
+                                trailerRecyclerView.setHasFixedSize(true);
+                                trailerRecyclerView.setAdapter(new VideoAdapter(videos));
+                            } else {
+                                trailerLayout.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<TvVideoResponse> call, @NonNull Throwable throwable) {
                     // Log error here since request failed
                     Log.e(TAG, throwable.toString());
                 }

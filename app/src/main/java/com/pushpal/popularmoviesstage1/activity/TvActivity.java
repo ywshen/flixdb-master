@@ -33,13 +33,9 @@ import android.widget.TextView;
 import com.konifar.fab_transformation.FabTransformation;
 import com.pushpal.popularmoviesstage1.R;
 import com.pushpal.popularmoviesstage1.adapter.GridAutoFitLayoutManager;
-import com.pushpal.popularmoviesstage1.adapter.MovieAdapter;
 import com.pushpal.popularmoviesstage1.adapter.TvClickListener;
 import com.pushpal.popularmoviesstage1.adapter.TvAdapter;
-import com.pushpal.popularmoviesstage1.database.MainViewModel;
 import com.pushpal.popularmoviesstage1.database.TvViewModel;
-import com.pushpal.popularmoviesstage1.model.Movie;
-import com.pushpal.popularmoviesstage1.model.MovieResponse;
 import com.pushpal.popularmoviesstage1.model.Tv;
 import com.pushpal.popularmoviesstage1.model.TvResponse;
 import com.pushpal.popularmoviesstage1.networking.ConnectivityReceiver;
@@ -47,7 +43,6 @@ import com.pushpal.popularmoviesstage1.networking.RESTClient;
 import com.pushpal.popularmoviesstage1.networking.RESTClientInterface;
 import com.pushpal.popularmoviesstage1.utilities.Constants;
 import com.pushpal.popularmoviesstage1.utilities.MovieApplication;
-import com.pushpal.popularmoviesstage1.utilities.MovieUtils;
 import com.pushpal.popularmoviesstage1.utilities.TvUtils;
 import com.victor.loading.newton.NewtonCradleLoading;
 
@@ -387,8 +382,8 @@ public class TvActivity extends AppCompatActivity implements
             // Show tap target view for FAB
             new MaterialTapTargetPrompt.Builder(TvActivity.this)
                     .setTarget(targetView)
-                    .setPrimaryText("Sort mMovieList")
-                    .setSecondaryText("Tap the sort icon to select the order of mMovieList.")
+                    .setPrimaryText("Sort mTvList")
+                    .setSecondaryText("Tap the sort icon to select the order of mTvList.")
                     .setPromptStateChangeListener(new MaterialTapTargetPrompt.PromptStateChangeListener() {
                         @Override
                         public void onPromptStateChanged(@NonNull MaterialTapTargetPrompt prompt, int state) {
@@ -499,7 +494,7 @@ public class TvActivity extends AppCompatActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.movies, menu);
+        inflater.inflate(R.menu.tv, menu);
         /* Return true so that the menu is displayed in the Toolbar */
         return true;
     }
@@ -516,8 +511,8 @@ public class TvActivity extends AppCompatActivity implements
     @Override
     public void onTvClick(int pos, Tv tv, ImageView sharedImageView) {
         Intent intent = new Intent(this, TvDetailsActivity.class);
-        intent.putExtra(Constants.EXTRA_TV_ITEM, tv);
-        intent.putExtra(Constants.EXTRA_TV_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
+        intent.putExtra(Constants.EXTRA_MOVIE_ITEM, tv);
+        intent.putExtra(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
 
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
@@ -526,7 +521,7 @@ public class TvActivity extends AppCompatActivity implements
 
         mTvViewModel.setTvs(mTvList);
         mResumeType = "intent";
-        startActivity(intent, options.toBundle());
+        TvActivity.this.startActivity(intent, options.toBundle());
     }
 
     private void retrieveFavTvs() {
@@ -537,7 +532,7 @@ public class TvActivity extends AppCompatActivity implements
             @Override
             public void onChanged(@Nullable List<Tv> tvs) {
                 if (tvs != null) {
-                    Log.e(TAG, "Movie Live Data changed in View Model.");
+                    Log.e(TAG, "Tv Live Data changed in View Model.");
 
                     sFavouriteTvs.clear();
                     sFavouriteTvs.addAll(tvs);

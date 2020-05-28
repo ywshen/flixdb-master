@@ -181,7 +181,9 @@ public class MainActivity extends AppCompatActivity implements
         } else if (mResumeType.equals(Constants.RESUME_AFTER_ROTATION)) {
             if (mMovieList != null) {
                 mMovieList.clear();
-                mMovieList.addAll(mMainViewModel.getMovies());
+                if(mMainViewModel.getMovies() != null){
+                    mMovieList.addAll(mMainViewModel.getMovies());
+                }
             }
 
             toolbarExt.setText(mSortCategory);

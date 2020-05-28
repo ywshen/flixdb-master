@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorTooLightGrey"
     android:fitsSystemWindows="true"
-    tools:context=".activity.DetailsActivity">
+    tools:context=".activity.TvDetailsActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -48,7 +48,7 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <include layout="@layout/activity_details_info" />
+        <include layout="@layout/activity_tv_details_info" />
     </android.support.v4.widget.NestedScrollView>
 
 </android.support.design.widget.CoordinatorLayout>
