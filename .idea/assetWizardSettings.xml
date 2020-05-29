@@ -100,7 +100,7 @@
                                   </option>
                                   <option name="values">
                                     <map>
-                                      <entry key="foregroundImage" value="W:\Android\Docs\Nanodegree\Project_Resources\pop_mov_logo.png" />
+                                      <entry key="foregroundImage" value="C:\Users\ywshe\Downloads\Movie_icon.png" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -167,11 +167,6 @@
                                 </PersistentState>
                               </value>
                             </entry>
-                          </map>
-                        </option>
-                        <option name="values">
-                          <map>
-                            <entry key="outputIconType" value="ACTIONBAR" />
                           </map>
                         </option>
                       </PersistentState>
