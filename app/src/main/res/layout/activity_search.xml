@@ -42,8 +42,6 @@
         app:spanCount="3"
         tools:listitem="@layout/item_movie_compact" />
 
-    <include layout="@layout/layout_loader" />
-
     <View
         android:id="@+id/overlay"
         android:layout_width="match_parent"

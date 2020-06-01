@@ -108,6 +108,23 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
+    public Movie() {
+        this.posterPath = null;
+        this.adult = false;
+        this.overview = null;
+        this.releaseDate = null;
+        this.genreIds = null;
+        this.id = null;
+        this.originalTitle = null;
+        this.originalLanguage = null;
+        this.title = null;
+        this.backdropPath = null;
+        this.popularity = null;
+        this.voteCount = null;
+        this.video = null;
+        this.voteAverage = null;
+    }
+
     // Tell Room to ignore this constructor
     @Ignore
     private Movie(Parcel in) {

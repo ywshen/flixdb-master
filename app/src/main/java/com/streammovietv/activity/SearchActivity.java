@@ -31,6 +31,7 @@ import com.streammovietv.adapter.GridAutoFitLayoutManager;
 import com.streammovietv.adapter.SearchAdapter;
 import com.streammovietv.adapter.SearchClickListener;
 import com.streammovietv.database.SearchViewModel;
+import com.streammovietv.model.Movie;
 import com.streammovietv.model.Search;
 import com.streammovietv.model.SearchResponse;
 import com.streammovietv.networking.ConnectivityReceiver;
@@ -60,10 +61,6 @@ public class SearchActivity extends AppCompatActivity implements
     RecyclerView mRecyclerView;
     @BindView(R.id.coordinatorLayout)
     CoordinatorLayout mCoordinatorLayout;
-    @BindView(R.id.loader)
-    NewtonCradleLoading loader;
-    @BindView(R.id.loader_container)
-    LinearLayout loaderContainer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.overlay)
@@ -95,8 +92,6 @@ public class SearchActivity extends AppCompatActivity implements
         resetData();
         setupRecyclerView();
         implementPagination();
-
-        startLoader();
 
         editSearch = (SearchView) findViewById(R.id.searchView);
         editSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -165,7 +160,6 @@ public class SearchActivity extends AppCompatActivity implements
                 }
                 rearrangeRecyclerView(mArrangementType);
 
-                dismissLoader();
                 mResumeType = Constants.RESUME_NORMAL;
             }
 
@@ -209,14 +203,12 @@ public class SearchActivity extends AppCompatActivity implements
                                 }
                             }
                         }
-                        dismissLoader();
                     }
 
                     @Override
                     public void onFailure(@NonNull Call<SearchResponse> call, @NonNull Throwable throwable) {
                         // Log error here since request failed
                         Log.e(TAG, throwable.toString());
-                        dismissLoader();
                         mCallPagePending = mCallPage;
                         mCallPage--;
                     }
@@ -300,21 +292,6 @@ public class SearchActivity extends AppCompatActivity implements
         }
     }
 
-    // Start loader
-    private void startLoader() {
-        loader.setLoadingColor(R.color.colorAccent);
-        loaderContainer.setVisibility(View.VISIBLE);
-        loader.start();
-    }
-
-    // Dismiss loader
-    private void dismissLoader() {
-        if (loader.isStart()) {
-            loaderContainer.setVisibility(View.INVISIBLE);
-            loader.stop();
-        }
-    }
-
     private void setupRecyclerView() {
         mSearchList = new ArrayList<>();
 
@@ -390,13 +367,15 @@ public class SearchActivity extends AppCompatActivity implements
     public void onSearchClick(int pos, Search search, ImageView sharedImageView) {
         Intent intent;
         if(search.getTitle() != null){
+            Movie movie = this.searchToMovie(search);
             intent = new Intent(this, DetailsActivity.class);
+            intent.putExtra(Constants.EXTRA_MOVIE_ITEM, movie);
+            intent.putExtra(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
         } else {
             intent = new Intent(this, TvDetailsActivity.class);
+            intent.putExtra(Constants.EXTRA_MOVIE_ITEM, search);
+            intent.putExtra(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
         }
-        intent.putExtra(Constants.EXTRA_MOVIE_ITEM, search);
-        intent.putExtra(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
-
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 this,
                 sharedImageView,
@@ -411,5 +390,12 @@ public class SearchActivity extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
         Log.e(TAG, "onDestroy: .");
+    }
+
+    private Movie searchToMovie(Search search) {
+        Movie movie = new Movie(search.getPosterPath(), search.getAdult(), search.getOverview(), search.getReleaseDate(),
+                                search.getId(), search.getOriginalTitle(), search.getOriginalLanguage(), search.getTitle(),
+                                search.getBackdropPath(), search.getPopularity(), search.getVoteCount(), search.getVideo(), search.getVoteAverage() );
+        return movie;
     }
 }
