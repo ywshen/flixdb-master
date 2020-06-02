@@ -34,6 +34,7 @@ import com.streammovietv.database.SearchViewModel;
 import com.streammovietv.model.Movie;
 import com.streammovietv.model.Search;
 import com.streammovietv.model.SearchResponse;
+import com.streammovietv.model.Tv;
 import com.streammovietv.networking.ConnectivityReceiver;
 import com.streammovietv.networking.RESTClient;
 import com.streammovietv.networking.RESTClientInterface;
@@ -372,8 +373,9 @@ public class SearchActivity extends AppCompatActivity implements
             intent.putExtra(Constants.EXTRA_MOVIE_ITEM, movie);
             intent.putExtra(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
         } else {
+            Tv tv = this.searchToTv(search);
             intent = new Intent(this, TvDetailsActivity.class);
-            intent.putExtra(Constants.EXTRA_MOVIE_ITEM, search);
+            intent.putExtra(Constants.EXTRA_MOVIE_ITEM, tv);
             intent.putExtra(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME, ViewCompat.getTransitionName(sharedImageView));
         }
         ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
@@ -397,5 +399,11 @@ public class SearchActivity extends AppCompatActivity implements
                                 search.getId(), search.getOriginalTitle(), search.getOriginalLanguage(), search.getTitle(),
                                 search.getBackdropPath(), search.getPopularity(), search.getVoteCount(), search.getVideo(), search.getVoteAverage() );
         return movie;
+    }
+    private Tv searchToTv(Search search) {
+        Tv tv = new Tv(search.getPosterPath(), search.getOverview(), search.getFirstAirDate(), search.getId(),
+                search.getOriginalName(), search.getOriginalLanguage(), search.getName(), search.getBackdropPath(), search.getPopularity(),
+                search.getVoteCount(), search.getVoteAverage(), search.getNumberOfSeasons(), search.getNumberOfEpisodes());
+        return tv;
     }
 }
