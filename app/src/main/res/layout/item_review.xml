@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/colorBlackAlpha">
 
     <TextView
         android:id="@+id/tv_reviewer"
@@ -12,7 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
+        android:background="@color/colorBlackAlpha"
         tools:text="James" />
 
     <TextView
@@ -22,7 +24,8 @@
         android:ellipsize="end"
         android:maxLines="8"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@color/colorIconGrey"
+        android:textColor="@color/colorWhiteAlpha"
+        android:background="@color/colorBlackAlpha"
         tools:text="James" />
 </LinearLayout>
 

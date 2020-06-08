@@ -403,7 +403,7 @@ public class SearchActivity extends AppCompatActivity implements
     private Tv searchToTv(Search search) {
         Tv tv = new Tv(search.getPosterPath(), search.getOverview(), search.getFirstAirDate(), search.getId(),
                 search.getOriginalName(), search.getOriginalLanguage(), search.getName(), search.getBackdropPath(), search.getPopularity(),
-                search.getVoteCount(), search.getVoteAverage(), search.getNumberOfSeasons(), search.getNumberOfEpisodes());
+                search.getVoteCount(),  search.getVoteAverage(), search.getNumberOfSeasons(), search.getNumberOfEpisodes());
         return tv;
     }
 }

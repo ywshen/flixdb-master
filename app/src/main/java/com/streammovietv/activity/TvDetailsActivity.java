@@ -30,6 +30,7 @@ import com.streammovietv.database.TvDatabase;
 import com.streammovietv.model.Tv;
 import com.streammovietv.model.TvCast;
 import com.streammovietv.model.TvCreditResponse;
+import com.streammovietv.model.TvResponse;
 import com.streammovietv.model.TvReview;
 import com.streammovietv.model.TvReviewResponse;
 import com.streammovietv.model.TvVideoResponse;
@@ -111,7 +112,7 @@ public class TvDetailsActivity extends AppCompatActivity {
             tvFirstAirDate.setText(DateUtil.getFormattedDate(tv.getFirstAirDate()));
             tvLanguage.setText(getLanguage(tv.getOriginalLanguage()));
             tvVoteAverage.setText(String.valueOf(tv.getVoteAverage()));
-            String voteCount = String.valueOf(tv.getVoteCount()) + " " + getString(R.string.votes);
+            String voteCount = tv.getVoteCount() + " " + getString(R.string.votes);
             tvVoteCount.setText(voteCount);
             tvOverview.setText(String.valueOf(tv.getOverview()));
             collapsingToolbarLayout.setTitle(tv.getName());

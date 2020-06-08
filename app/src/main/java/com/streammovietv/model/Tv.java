@@ -55,6 +55,9 @@ public class Tv implements Parcelable {
     @ColumnInfo(name = "vote_average")
     @SerializedName("vote_average")
     private Double voteAverage;
+    @ColumnInfo(name = "video")
+    @SerializedName("video")
+    private Boolean video;
     @ColumnInfo(name = "number_of_episodes")
     @SerializedName("number_of_episodes")
     private Integer numberOfEpisodes;
@@ -104,6 +107,7 @@ public class Tv implements Parcelable {
             voteCount = in.readInt();
         }
         byte tmpVideo = in.readByte();
+        video = tmpVideo == 0 ? null : tmpVideo == 1;
         if (in.readByte() == 0) {
             voteAverage = null;
         } else {
@@ -201,6 +205,14 @@ public class Tv implements Parcelable {
         this.voteCount = voteCount;
     }
 
+    public Boolean getVideo() {
+        return video;
+    }
+
+    public void setVideo(Boolean video) {
+        this.video = video;
+    }
+
     public Double getVoteAverage() {
         return voteAverage;
     }
@@ -257,6 +269,7 @@ public class Tv implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(voteCount);
         }
+        parcel.writeByte((byte) (video == null ? 0 : video ? 1 : 2));
         if (voteAverage == null) {
             parcel.writeByte((byte) 0);
         } else {

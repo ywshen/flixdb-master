@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -36,6 +37,7 @@ import com.streammovietv.model.MovieTrailer;
 import com.streammovietv.model.MovieTrailerResponse;
 import com.streammovietv.networking.RESTClient;
 import com.streammovietv.networking.RESTClientInterface;
+import com.streammovietv.utilities.AppBarStateChangedListener;
 import com.streammovietv.utilities.Constants;
 import com.streammovietv.utilities.DateUtil;
 import com.streammovietv.utilities.MovieUtils;
@@ -58,6 +60,8 @@ public class DetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_movie_poster)
     ImageView moviePoster;
+    @BindView(R.id.iv_backdrop)
+    ImageView movieBackdrop;
     @BindView(R.id.tv_movie_title)
     TextView movieTitle;
     @BindView(R.id.tv_movie_release_date)
@@ -88,10 +92,13 @@ public class DetailsActivity extends AppCompatActivity {
     LinearLayout reviewLayout;
     private Context context;
 
+    private AppBarLayout appBarLayout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_details_new);
 
         ButterKnife.bind(this);
         setUpActionBar();
@@ -114,19 +121,35 @@ public class DetailsActivity extends AppCompatActivity {
             String voteCount = String.valueOf(movie.getVoteCount()) + " " + getString(R.string.votes);
             movieVoteCount.setText(voteCount);
             movieOverview.setText(String.valueOf(movie.getOverview()));
-            collapsingToolbarLayout.setTitle(movie.getTitle());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 String imageTransitionName = extras.getString(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME);
                 moviePoster.setTransitionName(imageTransitionName);
             }
 
-            final String imageURL = Constants.IMAGE_BASE_URL
+            final String posterURL = Constants.IMAGE_BASE_URL
                     + Constants.IMAGE_SIZE_342
                     + movie.getPosterPath();
             Picasso.with(this)
-                    .load(imageURL)
+                    .load(posterURL)
                     .into(moviePoster, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            supportStartPostponedEnterTransition();
+                        }
+
+                        @Override
+                        public void onError() {
+                            supportStartPostponedEnterTransition();
+                        }
+                    });
+
+            final String backdropURL = Constants.IMAGE_BASE_URL
+                    + Constants.IMAGE_SIZE_342
+                    + movie.getBackdropPath();
+            Picasso.with(this)
+                    .load(backdropURL)
+                    .into(movieBackdrop, new Callback() {
                         @Override
                         public void onSuccess() {
                             supportStartPostponedEnterTransition();
@@ -141,8 +164,27 @@ public class DetailsActivity extends AppCompatActivity {
             if (MovieUtils.isFavourite(movie))
                 likeButton.setChecked(true);
 
-            generateImageColor(imageURL);
+            generateImageColor(backdropURL);
             setUpLikeButton(movie);
+
+            appBarLayout = findViewById(R.id.appBarLayout);
+            final Movie finalMovie = movie;
+            appBarLayout.addOnOffsetChangedListener(new AppBarStateChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    float percentage = (appBarLayout.getTotalScrollRange() - (float) Math.abs(verticalOffset)) / appBarLayout.getTotalScrollRange();
+
+                    if (percentage < 0.2) {
+                        moviePoster.setVisibility(View.GONE);
+                        likeButton.setVisibility(View.GONE);
+                        collapsingToolbarLayout.setTitle(finalMovie.getTitle());
+                    } else if (percentage > 0.2) {
+                        moviePoster.setVisibility(View.VISIBLE);
+                        likeButton.setVisibility(View.VISIBLE);
+                        collapsingToolbarLayout.setTitle(" ");
+                    }
+                }
+            });
         }
     }
 

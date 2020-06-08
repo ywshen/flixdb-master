@@ -97,7 +97,6 @@ public class TvActivity extends AppCompatActivity implements
     private Snackbar mSnackBar;
     private int mCallPage, mCallPagePending, mAdapterPosition = 0;
     private String mSortCategory, mArrangementType, mResumeType = Constants.RESUME_NORMAL;
-    private boolean mViewToggle = false;
     private List<Tv> mTvList;
 
     @Override
@@ -520,7 +519,7 @@ public class TvActivity extends AppCompatActivity implements
 
         mTvViewModel.setTvs(mTvList);
         mResumeType = "intent";
-        TvActivity.this.startActivity(intent, options.toBundle());
+        startActivity(intent, options.toBundle());
     }
 
     private void retrieveFavTvs() {
