@@ -69,10 +69,13 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "vote_average")
     @SerializedName("vote_average")
     private Double voteAverage;
+    @ColumnInfo(name = "runtime")
+    @SerializedName("runtime")
+    private Integer runtime;
 
     public Movie(String posterPath, boolean adult, String overview, String releaseDate, Integer id,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
-                 Integer voteCount, Boolean video, Double voteAverage) {
+                 Integer voteCount, Boolean video, Double voteAverage, Integer runtime) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -86,12 +89,13 @@ public class Movie implements Parcelable {
         this.voteCount = voteCount;
         this.video = video;
         this.voteAverage = voteAverage;
+        this.runtime = runtime;
     }
 
     @Ignore
     public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
-                 Integer voteCount, Boolean video, Double voteAverage) {
+                 Integer voteCount, Boolean video, Double voteAverage, Integer runtime) {
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -106,6 +110,7 @@ public class Movie implements Parcelable {
         this.voteCount = voteCount;
         this.video = video;
         this.voteAverage = voteAverage;
+        this.runtime = runtime;
     }
 
     public Movie() {
@@ -123,6 +128,7 @@ public class Movie implements Parcelable {
         this.voteCount = null;
         this.video = null;
         this.voteAverage = null;
+        this.runtime = null;
     }
 
     // Tell Room to ignore this constructor
@@ -157,6 +163,11 @@ public class Movie implements Parcelable {
             voteAverage = null;
         } else {
             voteAverage = in.readDouble();
+        }
+        if (in.readByte() == 0) {
+            runtime = null;
+        } else {
+            runtime = in.readInt();
         }
     }
 
@@ -272,6 +283,10 @@ public class Movie implements Parcelable {
         this.voteAverage = voteAverage;
     }
 
+    public Integer getRuntime() { return runtime;}
+
+    public void setRuntime(Integer runtime) { this.runtime = runtime; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -311,6 +326,12 @@ public class Movie implements Parcelable {
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeDouble(voteAverage);
+        }
+        if (runtime == null) {
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(runtime);
         }
     }
 }

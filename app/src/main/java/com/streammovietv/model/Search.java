@@ -74,9 +74,12 @@ public class Search implements Parcelable{
     @ColumnInfo(name = "number_of_seasons")
     @SerializedName("number_of_seasons")
     private Integer numberOfSeasons;
+    @ColumnInfo(name = "runtime")
+    @SerializedName("runtime")
+    private Integer runtime;
 
     public Search(String posterPath, boolean adult, String overview, String firstAirDate, String releaseDate, String title, String name, String originalTitle, String originalName,
-                  String originalLanguage, String backdropPath, Double popularity, Double voteAverage, Integer id, Integer voteCount, boolean video, Integer numberOfEpisodes, Integer numberOfSeasons){
+                  String originalLanguage, String backdropPath, Double popularity, Double voteAverage, Integer id, Integer voteCount, boolean video, Integer numberOfEpisodes, Integer numberOfSeasons, Integer runtime){
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -95,6 +98,7 @@ public class Search implements Parcelable{
         this.video = video;
         this.numberOfEpisodes = numberOfEpisodes;
         this.numberOfSeasons = numberOfSeasons;
+        this.runtime = runtime;
     }
 
     private Search(Parcel in){
@@ -140,6 +144,11 @@ public class Search implements Parcelable{
             numberOfSeasons = null;
         } else {
             numberOfSeasons = in.readInt();
+        }
+        if (in.readByte() == 0){
+            runtime = null;
+        } else {
+            runtime = in.readInt();
         }
     }
 
@@ -215,6 +224,10 @@ public class Search implements Parcelable{
 
     public void setNumberOfSeasons(Integer numberOfSeasons) { this.numberOfSeasons = numberOfSeasons; }
 
+    public Integer getRuntime() { return runtime; }
+
+    public void setRuntime(Integer runtime) { this.runtime = runtime; }
+
     @Override
     public int describeContents() {
         return 0;
@@ -251,17 +264,23 @@ public class Search implements Parcelable{
             parcel.writeByte((byte) 1);
             parcel.writeInt(voteCount);
         }
-        if (voteCount == null){
+        if (numberOfEpisodes == null){
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(numberOfEpisodes);
         }
-        if (voteCount == null){
+        if (numberOfSeasons == null){
             parcel.writeByte((byte) 0);
         } else {
             parcel.writeByte((byte) 1);
             parcel.writeInt(numberOfSeasons);
+        }
+        if (runtime == null){
+            parcel.writeByte((byte) 0);
+        } else {
+            parcel.writeByte((byte) 1);
+            parcel.writeInt(runtime);
         }
     }
 }

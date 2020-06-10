@@ -397,7 +397,7 @@ public class SearchActivity extends AppCompatActivity implements
     private Movie searchToMovie(Search search) {
         Movie movie = new Movie(search.getPosterPath(), search.getAdult(), search.getOverview(), search.getReleaseDate(),
                                 search.getId(), search.getOriginalTitle(), search.getOriginalLanguage(), search.getTitle(),
-                                search.getBackdropPath(), search.getPopularity(), search.getVoteCount(), search.getVideo(), search.getVoteAverage() );
+                                search.getBackdropPath(), search.getPopularity(), search.getVoteCount(), search.getVideo(), search.getVoteAverage(), search.getRuntime());
         return movie;
     }
     private Tv searchToTv(Search search) {

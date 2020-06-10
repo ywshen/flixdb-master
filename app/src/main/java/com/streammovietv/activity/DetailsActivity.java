@@ -70,8 +70,6 @@ public class DetailsActivity extends AppCompatActivity {
     TextView movieLanguage;
     @BindView(R.id.tv_vote_average)
     TextView movieVoteAverage;
-    @BindView(R.id.tv_vote_count)
-    TextView movieVoteCount;
     @BindView(R.id.tv_overview)
     TextView movieOverview;
     @BindView(R.id.toolbar)
@@ -91,6 +89,16 @@ public class DetailsActivity extends AppCompatActivity {
     @BindView(R.id.ll_reviews)
     LinearLayout reviewLayout;
     private Context context;
+    @BindView(R.id.star1)
+    ImageView star1;
+    @BindView(R.id.star2)
+    ImageView star2;
+    @BindView(R.id.star3)
+    ImageView star3;
+    @BindView(R.id.star4)
+    ImageView star4;
+    @BindView(R.id.star5)
+    ImageView star5;
 
     private AppBarLayout appBarLayout;
 
@@ -118,8 +126,6 @@ public class DetailsActivity extends AppCompatActivity {
             movieReleaseDate.setText(DateUtil.getFormattedDate(movie.getReleaseDate()));
             movieLanguage.setText(getLanguage(movie.getOriginalLanguage()));
             movieVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
-            String voteCount = String.valueOf(movie.getVoteCount()) + " " + getString(R.string.votes);
-            movieVoteCount.setText(voteCount);
             movieOverview.setText(String.valueOf(movie.getOverview()));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -185,6 +191,7 @@ public class DetailsActivity extends AppCompatActivity {
                     }
                 }
             });
+            setStarRating(movie.getVoteAverage());
         }
     }
 
@@ -379,6 +386,50 @@ public class DetailsActivity extends AppCompatActivity {
                     Log.e(TAG, throwable.toString());
                 }
             });
+        }
+    }
+
+    private void setStarRating(double voteAverage) {
+        if (voteAverage <= 0.5) {
+            star1.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 0.5 && voteAverage <= 1.0 ) {
+            star1.setImageResource(R.drawable.star);
+        } else if (voteAverage > 1.0 && voteAverage <= 1.5) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 1.5 && voteAverage <= 2.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+        }  else if (voteAverage > 2.0 && voteAverage <= 2.5) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 2.5 && voteAverage <= 3.0 || voteAverage > 5.0 && voteAverage <= 6.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+        } else if (voteAverage > 3.0 && voteAverage <= 3.5 || voteAverage > 6.0 && voteAverage <= 7.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 3.5 && voteAverage <= 4.0 || voteAverage > 7.0 && voteAverage <= 8.0 ) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+        } else if (voteAverage > 4.0 && voteAverage <= 4.5 || voteAverage > 8.0 && voteAverage <= 9.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+            star5.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 4.5 && voteAverage <= 5.0 || voteAverage > 9 && voteAverage <= 10) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+            star5.setImageResource(R.drawable.star);
         }
     }
 }
