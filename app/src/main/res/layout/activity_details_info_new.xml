@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,42 +12,188 @@
         app:layout_constraintTop_toBottomOf="@+id/movie_header_container">
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/cl_overview"
+            android:id="@+id/cl_top_frame"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="75dp">
+            android:layout_height="275dp">
 
-            <TextView
-                android:id="@+id/tv_overview_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:text="@string/overview"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
-                android:textColor="@color/colorWhiteAlpha"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/movie_rating"
+                android:layout_width="306dp"
+                android:layout_height="87dp"
+                android:background="@android:color/transparent"
+                android:paddingLeft="20dp"
+                android:paddingTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/cl_overview"
+                app:layout_constraintTop_toBottomOf="@+id/tv_movie_title">
 
-            <TextView
-                android:id="@+id/tv_overview"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@color/colorWhiteAlpha"
+                <TextView
+                    android:id="@+id/tv_movie_release_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintStart_toStartOf="@+id/tv_movie_title"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
+                    tools:text="2018" />
+
+                <ImageView
+                    android:id="@+id/iv_dot_separator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/dot_separator"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_date"
+                    app:layout_constraintStart_toEndOf="@+id/tv_movie_release_date"
+                    app:layout_constraintTop_toTopOf="@+id/tv_movie_release_date"
+                    app:srcCompat="@drawable/dot_icon" />
+
+                <TextView
+                    android:id="@+id/tv_movie_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_date"
+                    app:layout_constraintStart_toEndOf="@+id/iv_dot_separator"
+                    app:layout_constraintTop_toTopOf="@+id/tv_movie_release_date"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:text="English" />
+
+                <TextView
+                    android:id="@+id/tv_movie_runtime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="96dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_movie_language"
+                    app:layout_constraintStart_toEndOf="@+id/tv_movie_language"
+                    app:layout_constraintTop_toTopOf="@+id/tv_movie_language"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:text="130" />
+
+                <TextView
+                    android:id="@+id/tv_movie_minutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_movie_runtime"
+                    app:layout_constraintStart_toEndOf="@+id/tv_movie_runtime"
+                    app:layout_constraintTop_toTopOf="@+id/tv_movie_runtime"
+                    app:layout_constraintVertical_bias="1.0"
+                    tools:text="mins" />
+
+                <ImageView
+                    android:id="@+id/star1"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/vote_count_icon"
+                    android:src="@drawable/star_empty"
+                    app:layout_constraintEnd_toStartOf="@+id/star2"
+                    app:layout_constraintTop_toTopOf="@+id/star2" />
+
+                <ImageView
+                    android:id="@+id/star2"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/vote_count_icon"
+                    android:src="@drawable/star_empty"
+                    app:layout_constraintEnd_toStartOf="@+id/star3"
+                    app:layout_constraintTop_toTopOf="@+id/star3" />
+
+                <ImageView
+                    android:id="@+id/star3"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/vote_count_icon"
+                    android:src="@drawable/star_empty"
+                    app:layout_constraintEnd_toStartOf="@+id/star4"
+                    app:layout_constraintTop_toTopOf="@+id/star4" />
+
+                <ImageView
+                    android:id="@+id/star4"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:contentDescription="@string/vote_count_icon"
+                    android:src="@drawable/star_empty"
+                    app:layout_constraintEnd_toStartOf="@+id/star5"
+                    app:layout_constraintTop_toTopOf="@+id/star5" />
+
+                <ImageView
+                    android:id="@+id/star5"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="5dp"
+                    android:contentDescription="@string/vote_count_icon"
+                    android:src="@drawable/star_empty"
+                    app:layout_constraintEnd_toStartOf="@+id/tv_vote_average"
+                    app:layout_constraintTop_toTopOf="@+id/tv_vote_average" />
+
+                <TextView
+                    android:id="@+id/tv_vote_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="92dp"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="8.5" />
+
+            </android.support.constraint.ConstraintLayout>
+
+            <android.support.constraint.ConstraintLayout
+                android:id="@+id/cl_overview"
+                android:layout_width="409dp"
+                android:layout_height="273dp"
+                android:paddingTop="70dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_overview_label"
-                app:layout_constraintTop_toBottomOf="@+id/tv_overview_label"
-                tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0">
+
+                <TextView
+                    android:id="@+id/tv_overview_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:layout_marginStart="4dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/overview"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorWhiteAlpha"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_overview"
+                    android:layout_width="348dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="20dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="@color/colorWhiteAlpha"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.6"
+                    app:layout_constraintStart_toStartOf="@+id/tv_overview_label"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_overview_label"
+                    tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion." />
+
+            </android.support.constraint.ConstraintLayout>
+
         </android.support.constraint.ConstraintLayout>
 
         <LinearLayout
             android:id="@+id/ll_cast"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/cl_overview"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/cl_top_frame"
+
             android:orientation="vertical">
 
             <TextView
@@ -118,5 +263,6 @@
                 android:background="@color/colorBlackAlpha"
                 android:padding="16dp" />
         </LinearLayout>
+
     </RelativeLayout>
 </android.support.constraint.ConstraintLayout>

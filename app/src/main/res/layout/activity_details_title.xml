@@ -13,6 +13,7 @@
         android:contentDescription="@string/app_name"
         android:scaleType="centerCrop"
         android:src="@mipmap/ic_launcher"
+        android:alpha="0.75"
         app:layout_collapseMode="parallax"
         app:layout_collapseParallaxMultiplier="0.7"
         tools:ignore="MissingConstraints"
@@ -22,8 +23,8 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/movie_header_container"
         android:layout_width="287dp"
-        android:layout_height="155dp"
-        android:layout_marginTop="144dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="200dp"
         android:background="@android:color/transparent"
         android:padding="16dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -34,8 +35,7 @@
         <TextView
             android:id="@+id/tv_movie_title"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginTop="32dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@color/colorWhite"
@@ -47,124 +47,6 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="The Godfather" />
 
-        <TextView
-            android:id="@+id/tv_movie_release_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintStart_toStartOf="@+id/tv_movie_title"
-            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title"
-            tools:text="2018" />
-
-        <ImageView
-            android:id="@+id/iv_dot_separator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:contentDescription="@string/dot_separator"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_date"
-            app:layout_constraintStart_toEndOf="@+id/tv_movie_release_date"
-            app:layout_constraintTop_toTopOf="@+id/tv_movie_release_date"
-            app:srcCompat="@drawable/dot_icon" />
-
-        <TextView
-            android:id="@+id/tv_movie_language"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_date"
-            app:layout_constraintStart_toEndOf="@+id/iv_dot_separator"
-            app:layout_constraintTop_toTopOf="@+id/tv_movie_release_date"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="English" />
-
-        <TextView
-            android:id="@+id/tv_movie_runtime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="96dp"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_movie_language"
-            app:layout_constraintStart_toEndOf="@+id/tv_movie_language"
-            app:layout_constraintTop_toTopOf="@+id/tv_movie_language"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="130" />
-
-        <TextView
-            android:id="@+id/tv_movie_minutes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@color/colorWhite"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_movie_runtime"
-            app:layout_constraintStart_toEndOf="@+id/tv_movie_runtime"
-            app:layout_constraintTop_toTopOf="@+id/tv_movie_runtime"
-            app:layout_constraintVertical_bias="1.0"
-            tools:text="mins" />
-
-        <ImageView
-            android:id="@+id/star1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="@string/vote_count_icon"
-            android:src="@drawable/star_empty"
-            app:layout_constraintEnd_toStartOf="@+id/star2"
-            app:layout_constraintTop_toTopOf="@+id/star2" />
-
-        <ImageView
-            android:id="@+id/star2"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="@string/vote_count_icon"
-            android:src="@drawable/star_empty"
-            app:layout_constraintEnd_toStartOf="@+id/star3"
-            app:layout_constraintTop_toTopOf="@+id/star3" />
-
-        <ImageView
-            android:id="@+id/star3"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="@string/vote_count_icon"
-            android:src="@drawable/star_empty"
-            app:layout_constraintEnd_toStartOf="@+id/star4"
-            app:layout_constraintTop_toTopOf="@+id/star4" />
-
-        <ImageView
-            android:id="@+id/star4"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:contentDescription="@string/vote_count_icon"
-            android:src="@drawable/star_empty"
-            app:layout_constraintEnd_toStartOf="@+id/star5"
-            app:layout_constraintTop_toTopOf="@+id/star5" />
-
-        <ImageView
-            android:id="@+id/star5"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="5dp"
-            android:contentDescription="@string/vote_count_icon"
-            android:src="@drawable/star_empty"
-            app:layout_constraintEnd_toStartOf="@+id/tv_vote_average"
-            app:layout_constraintTop_toTopOf="@+id/tv_vote_average" />
-
-        <TextView
-            android:id="@+id/tv_vote_average"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="90dp"
-            android:layout_marginEnd="60dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/colorWhite"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="8.5" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
 
