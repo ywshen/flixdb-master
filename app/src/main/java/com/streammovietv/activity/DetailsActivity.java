@@ -1,14 +1,18 @@
 package com.streammovietv.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -72,6 +76,8 @@ public class DetailsActivity extends AppCompatActivity {
     TextView movieVoteAverage;
     @BindView(R.id.tv_overview)
     TextView movieOverview;
+    @BindView(R.id.playTrailer)
+    TextView playTrailer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.btn_favourite)
@@ -80,10 +86,10 @@ public class DetailsActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.rv_cast)
     RecyclerView castRecyclerView;
-    @BindView(R.id.rv_trailer)
-    RecyclerView trailerRecyclerView;
-    @BindView(R.id.ll_trailers)
-    LinearLayout trailerLayout;
+    //@BindView(R.id.rv_trailer)
+    //RecyclerView trailerRecyclerView;
+   // @BindView(R.id.ll_trailers)
+    //LinearLayout trailerLayout;
     @BindView(R.id.rv_review)
     RecyclerView reviewRecyclerView;
     @BindView(R.id.ll_reviews)
@@ -99,6 +105,10 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView star4;
     @BindView(R.id.star5)
     ImageView star5;
+    @BindView(R.id.PlayButton)
+    FloatingActionButton PlayButton;
+    @BindView(R.id.movie_rating)
+    ConstraintLayout movieRating;
 
     private AppBarLayout appBarLayout;
 
@@ -118,9 +128,11 @@ public class DetailsActivity extends AppCompatActivity {
             movie = extras.getParcelable(Constants.EXTRA_MOVIE_ITEM);
 
         if (movie != null) {
+
             fetchCredits(movie.getId());
-            fetchTrailers(movie.getId());
+            //fetchTrailers(movie.getId());
             fetchReviews(movie.getId());
+            fetchFirstTrailer(movie.getId());
 
             movieTitle.setText(movie.getTitle());
             movieReleaseDate.setText(DateUtil.getFormattedDate(movie.getReleaseDate()));
@@ -183,10 +195,12 @@ public class DetailsActivity extends AppCompatActivity {
                     if (percentage < 0.2) {
                         moviePoster.setVisibility(View.GONE);
                         likeButton.setVisibility(View.GONE);
+                        movieRating.setVisibility(View.GONE);
                         collapsingToolbarLayout.setTitle(finalMovie.getTitle());
                     } else if (percentage > 0.2) {
                         moviePoster.setVisibility(View.VISIBLE);
                         likeButton.setVisibility(View.VISIBLE);
+                        movieRating.setVisibility(View.VISIBLE);
                         collapsingToolbarLayout.setTitle(" ");
                     }
                 }
@@ -309,7 +323,7 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchTrailers(int movieId) {
+    /* private  void fetchTrailers(int movieId) {
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
         Call<MovieTrailerResponse> call = restClientInterface.getTrailers(movieId, Constants.API_KEY);
 
@@ -335,6 +349,45 @@ public class DetailsActivity extends AppCompatActivity {
                                 trailerRecyclerView.setAdapter(new TrailerAdapter(trailers));
                             } else {
                                 trailerLayout.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<MovieTrailerResponse> call, @NonNull Throwable throwable) {
+                    // Log error here since request failed
+                    Log.e(TAG, throwable.toString());
+                }
+            });
+        }
+    } */
+
+    private void fetchFirstTrailer(int movieId){
+        RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
+        Call<MovieTrailerResponse> call = restClientInterface.getTrailers(movieId, Constants.API_KEY);
+
+        if (call != null) {
+            call.enqueue(new retrofit2.Callback<MovieTrailerResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<MovieTrailerResponse> call,
+                                       @NonNull Response<MovieTrailerResponse> response) {
+                    int statusCode = response.code();
+
+                    if (statusCode == 200) {
+                        if (response.body() != null) {
+                            MovieTrailerResponse movieTrailerResponse = response.body();
+                            final List<MovieTrailer> trailers = movieTrailerResponse != null ? movieTrailerResponse.getTrailers() : null;
+
+                            if (trailers != null && trailers.size() > 0) {
+                                playTrailer.setText("Play Trailer");
+                                PlayButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        context.startActivity(new Intent(Intent.ACTION_VIEW,
+                                                Uri.parse("vnd.youtube://" + trailers.get(0).getVideoKey())));
+                                    }
+                                });
                             }
                         }
                     }

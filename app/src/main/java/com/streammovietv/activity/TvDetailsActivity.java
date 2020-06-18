@@ -1,13 +1,18 @@
 package com.streammovietv.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteConstraintException;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -27,6 +32,8 @@ import com.streammovietv.adapter.TvReviewAdapter;
 import com.streammovietv.adapter.VideoAdapter;
 import com.streammovietv.database.AppExecutors;
 import com.streammovietv.database.TvDatabase;
+import com.streammovietv.model.MovieTrailer;
+import com.streammovietv.model.MovieTrailerResponse;
 import com.streammovietv.model.Tv;
 import com.streammovietv.model.TvCast;
 import com.streammovietv.model.TvCreditResponse;
@@ -37,6 +44,7 @@ import com.streammovietv.model.TvVideoResponse;
 import com.streammovietv.model.TvVideos;
 import com.streammovietv.networking.RESTClient;
 import com.streammovietv.networking.RESTClientInterface;
+import com.streammovietv.utilities.AppBarStateChangedListener;
 import com.streammovietv.utilities.Constants;
 import com.streammovietv.utilities.DateUtil;
 import com.streammovietv.utilities.TvUtils;
@@ -59,6 +67,8 @@ public class TvDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.iv_tv_poster)
     ImageView tvPoster;
+    @BindView(R.id.iv_backdrop)
+    ImageView tvBackdrop;
     @BindView(R.id.tv_movie_title)
     TextView tvName;
     @BindView(R.id.tv_movie_release_date)
@@ -67,10 +77,10 @@ public class TvDetailsActivity extends AppCompatActivity {
     TextView tvLanguage;
     @BindView(R.id.tv_vote_average)
     TextView tvVoteAverage;
-    @BindView(R.id.tv_vote_count)
-    TextView tvVoteCount;
-    @BindView(R.id.tv_overview)
+    @BindView((R.id.tv_overview))
     TextView tvOverview;
+    @BindView(R.id.playTrailer)
+    TextView playTrailer;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.btn_favourite)
@@ -79,20 +89,36 @@ public class TvDetailsActivity extends AppCompatActivity {
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.rv_cast)
     RecyclerView castRecyclerView;
-    @BindView(R.id.rv_trailer)
-    RecyclerView trailerRecyclerView;
-    @BindView(R.id.ll_trailers)
-    LinearLayout trailerLayout;
+    //@BindView(R.id.rv_trailer)
+    //RecyclerView trailerRecyclerView;
+    // @BindView(R.id.ll_trailers)
+    //LinearLayout trailerLayout;
     @BindView(R.id.rv_review)
     RecyclerView reviewRecyclerView;
     @BindView(R.id.ll_reviews)
     LinearLayout reviewLayout;
     private Context context;
+    @BindView(R.id.star1)
+    ImageView star1;
+    @BindView(R.id.star2)
+    ImageView star2;
+    @BindView(R.id.star3)
+    ImageView star3;
+    @BindView(R.id.star4)
+    ImageView star4;
+    @BindView(R.id.star5)
+    ImageView star5;
+    @BindView(R.id.PlayButton)
+    FloatingActionButton PlayButton;
+    @BindView(R.id.movie_rating)
+    ConstraintLayout tvRating;
+
+    private AppBarLayout appBarLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tv_details);
+        setContentView(R.layout.activity_tv_details_new);
 
         ButterKnife.bind(this);
         setUpActionBar();
@@ -105,29 +131,45 @@ public class TvDetailsActivity extends AppCompatActivity {
 
         if (tv != null) {
             fetchTvCredits(tv.getId());
-            fetchTrailers(tv.getId());
+            //fetchTrailers(tv.getId());
             fetchReviews(tv.getId());
+            fetchFirstTrailer(tv.getId());
 
             tvName.setText(tv.getName());
             tvFirstAirDate.setText(DateUtil.getFormattedDate(tv.getFirstAirDate()));
             tvLanguage.setText(getLanguage(tv.getOriginalLanguage()));
             tvVoteAverage.setText(String.valueOf(tv.getVoteAverage()));
-            String voteCount = tv.getVoteCount() + " " + getString(R.string.votes);
-            tvVoteCount.setText(voteCount);
             tvOverview.setText(String.valueOf(tv.getOverview()));
-            collapsingToolbarLayout.setTitle(tv.getName());
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 String imageTransitionName = extras.getString(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME);
                 tvPoster.setTransitionName(imageTransitionName);
             }
 
-            final String imageURL = Constants.IMAGE_BASE_URL
+            final String posterURL = Constants.IMAGE_BASE_URL
                     + Constants.IMAGE_SIZE_342
                     + tv.getPosterPath();
             Picasso.with(this)
-                    .load(imageURL)
+                    .load(posterURL)
                     .into(tvPoster, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            supportStartPostponedEnterTransition();
+                        }
+
+                        @Override
+                        public void onError() {
+                            supportStartPostponedEnterTransition();
+                        }
+                    });
+
+
+            final String backdropURL = Constants.IMAGE_BASE_URL
+                    + Constants.IMAGE_SIZE_342
+                    + tv.getBackdropPath();
+            Picasso.with(this)
+                    .load(backdropURL)
+                    .into(tvBackdrop, new Callback() {
                         @Override
                         public void onSuccess() {
                             supportStartPostponedEnterTransition();
@@ -142,8 +184,30 @@ public class TvDetailsActivity extends AppCompatActivity {
             if ( TvUtils.isFavourite(tv))
                 likeButton.setChecked(true);
 
-            generateImageColor(imageURL);
+            generateImageColor(backdropURL);
             setUpLikeButton(tv);
+
+            appBarLayout = findViewById(R.id.appBarLayout);
+            final Tv finalTv = tv;
+            appBarLayout.addOnOffsetChangedListener(new AppBarStateChangedListener() {
+                @Override
+                public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                    float percentage = (appBarLayout.getTotalScrollRange() - (float) Math.abs(verticalOffset)) / appBarLayout.getTotalScrollRange();
+
+                    if (percentage < 0.2) {
+                        tvPoster.setVisibility(View.GONE);
+                        likeButton.setVisibility(View.GONE);
+                        tvRating.setVisibility(View.GONE);
+                        collapsingToolbarLayout.setTitle(finalTv.getName());
+                    } else if (percentage > 0.2) {
+                        tvPoster.setVisibility(View.VISIBLE);
+                        likeButton.setVisibility(View.VISIBLE);
+                        tvRating.setVisibility(View.VISIBLE);
+                        collapsingToolbarLayout.setTitle(" ");
+                    }
+                }
+            });
+            setStarRating(tv.getVoteAverage());
         }
     }
 
@@ -261,7 +325,7 @@ public class TvDetailsActivity extends AppCompatActivity {
         }
     }
 
-    private void fetchTrailers(int tvId) {
+  /*  private void fetchTrailers(int tvId) {
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
         Call<TvVideoResponse> call = restClientInterface.getVideos(tvId, Constants.API_KEY);
 
@@ -294,6 +358,45 @@ public class TvDetailsActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NonNull Call<TvVideoResponse> call, @NonNull Throwable throwable) {
+                    // Log error here since request failed
+                    Log.e(TAG, throwable.toString());
+                }
+            });
+        }
+    } */
+
+    private void fetchFirstTrailer(int movieId){
+        RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
+        Call<MovieTrailerResponse> call = restClientInterface.getTrailers(movieId, Constants.API_KEY);
+
+        if (call != null) {
+            call.enqueue(new retrofit2.Callback<MovieTrailerResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<MovieTrailerResponse> call,
+                                       @NonNull Response<MovieTrailerResponse> response) {
+                    int statusCode = response.code();
+
+                    if (statusCode == 200) {
+                        if (response.body() != null) {
+                            MovieTrailerResponse movieTrailerResponse = response.body();
+                            final List<MovieTrailer> trailers = movieTrailerResponse != null ? movieTrailerResponse.getTrailers() : null;
+
+                            if (trailers != null && trailers.size() > 0) {
+                                playTrailer.setText("Play Trailer");
+                                PlayButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        context.startActivity(new Intent(Intent.ACTION_VIEW,
+                                                Uri.parse("vnd.youtube://" + trailers.get(0).getVideoKey())));
+                                    }
+                                });
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<MovieTrailerResponse> call, @NonNull Throwable throwable) {
                     // Log error here since request failed
                     Log.e(TAG, throwable.toString());
                 }
@@ -338,6 +441,50 @@ public class TvDetailsActivity extends AppCompatActivity {
                     Log.e(TAG, throwable.toString());
                 }
             });
+        }
+    }
+
+    private void setStarRating(double voteAverage) {
+        if (voteAverage <= 0.5) {
+            star1.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 0.5 && voteAverage <= 1.0 ) {
+            star1.setImageResource(R.drawable.star);
+        } else if (voteAverage > 1.0 && voteAverage <= 1.5) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 1.5 && voteAverage <= 2.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+        }  else if (voteAverage > 2.0 && voteAverage <= 2.5) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 2.5 && voteAverage <= 3.0 || voteAverage > 5.0 && voteAverage <= 6.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+        } else if (voteAverage > 3.0 && voteAverage <= 3.5 || voteAverage > 6.0 && voteAverage <= 7.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 3.5 && voteAverage <= 4.0 || voteAverage > 7.0 && voteAverage <= 8.0 ) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+        } else if (voteAverage > 4.0 && voteAverage <= 4.5 || voteAverage > 8.0 && voteAverage <= 9.0) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+            star5.setImageResource(R.drawable.star_half);
+        } else if (voteAverage > 4.5 && voteAverage <= 5.0 || voteAverage > 9 && voteAverage <= 10) {
+            star1.setImageResource(R.drawable.star);
+            star2.setImageResource(R.drawable.star);
+            star3.setImageResource(R.drawable.star);
+            star4.setImageResource(R.drawable.star);
+            star5.setImageResource(R.drawable.star);
         }
     }
 }

@@ -78,7 +78,7 @@
         app:small_shine_offset_angle="20" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/PlayButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="true"
@@ -86,6 +86,8 @@
         app:layout_anchor="@+id/appBarLayout"
         app:layout_anchorGravity="center"
         app:srcCompat="@android:drawable/ic_media_play" />
+
+
 
 
 </android.support.design.widget.CoordinatorLayout>

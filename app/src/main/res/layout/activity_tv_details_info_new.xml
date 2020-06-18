@@ -17,7 +17,7 @@
             android:layout_height="275dp">
 
             <android.support.constraint.ConstraintLayout
-                android:id="@+id/movie_rating"
+                android:id="@+id/tv_rating"
                 android:layout_width="306dp"
                 android:layout_height="87dp"
                 android:background="@android:color/transparent"
