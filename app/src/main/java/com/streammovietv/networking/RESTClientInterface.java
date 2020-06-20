@@ -41,7 +41,7 @@ public interface RESTClientInterface {
     Call<MovieResponse> getLatestMovies(@Query("api_key") String apiKey);
 
     @GET(Constants.MOVIE_DETAILS_URL)
-    Call<MovieResponse> getMovieDetails(@Path("id") int id, @Query("api_key") String apiKey);
+    Call<MovieResponse> getMovieDetails(@Path("id") int id, @Query("api_key") String apiKey, @Query("language") String Language);
 
     @GET(Constants.LANGUAGES)
     Call<List<MovieLang>> getLanguages(@Query("api_key") String apiKey);

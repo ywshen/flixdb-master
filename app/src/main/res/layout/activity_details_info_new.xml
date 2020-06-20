@@ -61,29 +61,41 @@
                     tools:text="English" />
 
                 <TextView
-                    android:id="@+id/tv_movie_runtime"
+                    android:id="@+id/tv_movie_genres"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="96dp"
+                    android:layout_marginStart="32dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorWhite"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_movie_language"
                     app:layout_constraintStart_toEndOf="@+id/tv_movie_language"
                     app:layout_constraintTop_toTopOf="@+id/tv_movie_language"
                     app:layout_constraintVertical_bias="1.0"
-                    tools:text="130" />
+                    tools:text="Action" />
+
+                <ImageView
+                    android:id="@+id/iv_dot_separator1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:contentDescription="@string/dot_separator"
+                    android:textColor="@color/colorWhite"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_movie_release_date"
+                    app:layout_constraintStart_toEndOf="@+id/tv_movie_genres"
+                    app:layout_constraintTop_toTopOf="@+id/tv_movie_genres"
+                    app:srcCompat="@drawable/dot_icon" />
 
                 <TextView
-                    android:id="@+id/tv_movie_minutes"
+                    android:id="@+id/tv_movie_genres1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorWhite"
                     app:layout_constraintBottom_toBottomOf="@+id/tv_movie_runtime"
-                    app:layout_constraintStart_toEndOf="@+id/tv_movie_runtime"
-                    app:layout_constraintTop_toTopOf="@+id/tv_movie_runtime"
+                    app:layout_constraintStart_toEndOf="@+id/iv_dot_separator1"
+                    app:layout_constraintTop_toTopOf="@+id/tv_movie_genres"
                     app:layout_constraintVertical_bias="1.0"
-                    tools:text="mins" />
+                    tools:text="Comedy" />
 
                 <ImageView
                     android:id="@+id/star1"
@@ -144,6 +156,27 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="8.5" />
+
+                <com.sackcentury.shinebuttonlib.ShineButton
+                    android:id="@+id/btn_favourite"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginStart="16dp"
+                    android:src="@android:color/darker_gray"
+                    app:allow_random_color="false"
+                    app:big_shine_color="#FF6666"
+                    app:btn_color="@color/colorVeryLightGrey"
+                    app:btn_fill_color="#FF6666"
+                    app:click_animation_duration="200"
+                    app:enable_flashing="false"
+                    app:layout_constraintBottom_toBottomOf="@id/star5"
+                    app:layout_constraintStart_toEndOf="@id/tv_vote_average"
+                    app:shine_animation_duration="2500"
+                    app:shine_count="10"
+                    app:shine_turn_angle="10"
+                    app:siShape="@raw/heart"
+                    app:small_shine_color="#CC9999"
+                    app:small_shine_offset_angle="20" />
 
             </android.support.constraint.ConstraintLayout>
 
@@ -214,11 +247,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ll_trailers"
+            android:id="@+id/ll_episodes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_cast"
             android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/episodes"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorWhiteAlpha"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
@@ -226,7 +275,7 @@
             android:id="@+id/ll_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_trailers"
+            android:layout_below="@+id/ll_episodes"
             android:background="@color/colorBlackAlpha"
             android:orientation="vertical">
 

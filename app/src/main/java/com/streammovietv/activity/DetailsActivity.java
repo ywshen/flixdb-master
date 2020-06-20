@@ -139,6 +139,7 @@ public class DetailsActivity extends AppCompatActivity {
             movieLanguage.setText(getLanguage(movie.getOriginalLanguage()));
             movieVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
             movieOverview.setText(String.valueOf(movie.getOverview()));
+            Log.d("runtime: ",  String.valueOf(movie.getRuntime()));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 String imageTransitionName = extras.getString(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME);
