@@ -17,5 +17,5 @@ public class MovieSimilarResponse {
 
     public List<MovieSimilar> getSimilar() { return similar; }
 
-    public void setSimilar(List<MovieSimilar>similar) { this.similar = similar; }
+    public void setSimilar(List<MovieSimilar>similar) { this.similar = similar; } 
 }
