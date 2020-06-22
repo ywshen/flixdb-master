@@ -13,6 +13,8 @@ import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.graphics.Palette;
@@ -28,7 +30,10 @@ import android.widget.Toast;
 
 import com.streammovietv.R;
 import com.streammovietv.adapter.CastAdapter;
+import com.streammovietv.adapter.MovieClickListener;
 import com.streammovietv.adapter.ReviewAdapter;
+import com.streammovietv.adapter.SimilarAdapter;
+import com.streammovietv.adapter.SimilarClickListener;
 import com.streammovietv.adapter.TrailerAdapter;
 import com.streammovietv.database.AppExecutors;
 import com.streammovietv.database.MovieDatabase;
@@ -37,8 +42,11 @@ import com.streammovietv.model.MovieCast;
 import com.streammovietv.model.MovieCreditResponse;
 import com.streammovietv.model.MovieReview;
 import com.streammovietv.model.MovieReviewResponse;
+import com.streammovietv.model.MovieSimilar;
+import com.streammovietv.model.MovieSimilarResponse;
 import com.streammovietv.model.MovieTrailer;
 import com.streammovietv.model.MovieTrailerResponse;
+import com.streammovietv.networking.ConnectivityReceiver;
 import com.streammovietv.networking.RESTClient;
 import com.streammovietv.networking.RESTClientInterface;
 import com.streammovietv.utilities.AppBarStateChangedListener;
@@ -90,6 +98,10 @@ public class DetailsActivity extends AppCompatActivity {
     //RecyclerView trailerRecyclerView;
    // @BindView(R.id.ll_trailers)
     //LinearLayout trailerLayout;
+    @BindView(R.id.rv_similar)
+    RecyclerView similarRcyclerView;
+    @BindView(R.id.ll_similar)
+    LinearLayout similarLayout;
     @BindView(R.id.rv_review)
     RecyclerView reviewRecyclerView;
     @BindView(R.id.ll_reviews)
@@ -403,6 +415,46 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    private  void fetchSimilar(int movieId) {
+        RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
+        Call<MovieSimilarResponse> call = restClientInterface.getSimilar(movieId, Constants.API_KEY);
+
+        if (call != null) {
+            call.enqueue(new retrofit2.Callback<MovieSimilarResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<MovieSimilarResponse> call,
+                                       @NonNull Response<MovieSimilarResponse> response) {
+                    int statusCode = response.code();
+
+                    if (statusCode == 200) {
+                        if (response.body() != null) {
+                            MovieSimilarResponse movieSimilarResponse = response.body();
+                            List<MovieSimilar> similar = movieSimilarResponse != null ? movieSimilarResponse.getSimilar() : null;
+
+                            if (similar != null && similar.size() > 0) {
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailsActivity.this,
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false);
+
+                                similarRcyclerView.setLayoutManager(layoutManager);
+                                similarRcyclerView.setHasFixedSize(true);
+                                similarRcyclerView.setAdapter(new SimilarAdapter(similar));
+                            } else {
+                                similarLayout.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<MovieSimilarResponse> call, @NonNull Throwable throwable) {
+                    // Log error here since request failed
+                    Log.e(TAG, throwable.toString());
+                }
+            });
+        }
+    }
+
     private void fetchReviews(int movieId) {
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
         Call<MovieReviewResponse> call = restClientInterface.getReviews(movieId, Constants.API_KEY);
@@ -442,6 +494,8 @@ public class DetailsActivity extends AppCompatActivity {
             });
         }
     }
+
+
 
     private void setStarRating(double voteAverage) {
         if (voteAverage <= 0.5) {

@@ -59,8 +59,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import uk.co.samuelwall.materialtaptargetprompt.MaterialTapTargetPrompt;
 
 public class MainActivity extends AppCompatActivity implements
-        ConnectivityReceiver.ConnectivityReceiverListener,
-        MovieClickListener {
+    ConnectivityReceiver.ConnectivityReceiverListener,
+    MovieClickListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     public static Map<String, String> sLanguageMap;

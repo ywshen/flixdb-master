@@ -256,10 +256,35 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_episodes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_cast"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/episodes"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorWhiteAlpha"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_trailers"
+            android:layout_below="@+id/ll_episodes"
             android:background="@color/colorBlackAlpha"
             android:orientation="vertical">
 
