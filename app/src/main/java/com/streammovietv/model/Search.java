@@ -2,10 +2,13 @@ package com.streammovietv.model;
 
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.os.Parcel;
 import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
+
+import java.util.List;
 
 @Entity(tableName = "search")
 public class Search implements Parcelable{
@@ -23,6 +26,9 @@ public class Search implements Parcelable{
     @ColumnInfo(name = "id")
     @SerializedName("id")
     private Integer id;
+    @ColumnInfo(name = "genre_name")
+    @SerializedName("genre_name")
+    private List<String> genreName;
     @ColumnInfo(name = "poster_path")
     @SerializedName("poster_path")
     private String posterPath;
@@ -79,7 +85,7 @@ public class Search implements Parcelable{
     private Integer runtime;
 
     public Search(String posterPath, boolean adult, String overview, String firstAirDate, String releaseDate, String title, String name, String originalTitle, String originalName,
-                  String originalLanguage, String backdropPath, Double popularity, Double voteAverage, Integer id, Integer voteCount, boolean video, Integer numberOfEpisodes, Integer numberOfSeasons, Integer runtime){
+                  String originalLanguage, String backdropPath, List<String> genre_name, Double popularity, Double voteAverage, Integer id, Integer voteCount, boolean video, Integer numberOfEpisodes, Integer numberOfSeasons, Integer runtime){
         this.posterPath = posterPath;
         this.adult = adult;
         this.overview = overview;
@@ -88,6 +94,7 @@ public class Search implements Parcelable{
         this.title = title;
         this.name = name;
         this.backdropPath = backdropPath;
+        this.genreName = genre_name;
         this.popularity = popularity;
         this.originalTitle = originalTitle;
         this.originalName = originalName;
@@ -112,6 +119,7 @@ public class Search implements Parcelable{
         originalLanguage = in.readString();
         title = in.readString();
         backdropPath = in.readString();
+        in.readList(genreName, Search.class.getClassLoader());
         if (in.readByte() == 0) {
             popularity = null;
         } else {
@@ -192,6 +200,10 @@ public class Search implements Parcelable{
 
     public void setName(String name) { this.name = name; }
 
+    public List<String> getGenreName() { return genreName; }
+
+    public void setGenreName(List<String> genreName) { this.genreName = genreName;}
+
     public String getBackdropPath() { return backdropPath; }
 
     public void setBackdropPath(String backdropPath) { this.backdropPath = backdropPath; }
@@ -246,6 +258,7 @@ public class Search implements Parcelable{
         parcel.writeString(title);
         parcel.writeString(name);
         parcel.writeString(backdropPath);
+        parcel.writeList(genreName);
         if (voteAverage == null){
             parcel.writeByte((byte) 0);
         } else {

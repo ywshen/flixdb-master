@@ -24,6 +24,7 @@ public class Constants {
     public static final String TV_REVIEWS_URL = "tv/{tv_id}/reviews";
     public static final String PERSON_URL = "person/{person_id}";
     public static final String MOVIE_SIMILAR_URL = "movie/{movie_id}/similar";
+    public static final String TV_SIMILAR_URL = "tv/{tv_id}/similar";
 
     public static final String DISCOVER_URL = BASE_URL + "discover/movie?api_key=" + API_KEY;
 

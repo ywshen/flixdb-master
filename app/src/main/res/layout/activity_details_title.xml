@@ -22,7 +22,7 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/movie_header_container"
-        android:layout_width="281dp"
+        android:layout_width="300dp"
         android:layout_height="132dp"
         android:layout_marginTop="168dp"
         android:background="@android:color/transparent"
@@ -37,7 +37,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Play Trailer"
-            android:paddingLeft="26dp"
+            android:paddingLeft="45dp"
             android:textColor="@color/colorWhite"
             app:layout_constraintBottom_toTopOf="@id/tv_movie_title"
             app:layout_constraintLeft_toLeftOf="@id/tv_movie_title" />

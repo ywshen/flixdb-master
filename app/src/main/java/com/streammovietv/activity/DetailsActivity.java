@@ -82,6 +82,10 @@ public class DetailsActivity extends AppCompatActivity {
     TextView movieLanguage;
     @BindView(R.id.tv_vote_average)
     TextView movieVoteAverage;
+    @BindView(R.id.tv_movie_genres1)
+    TextView movieGenres1;
+    @BindView(R.id.tv_movie_genres2)
+    TextView movieGenres2;
     @BindView(R.id.tv_overview)
     TextView movieOverview;
     @BindView(R.id.playTrailer)
@@ -99,7 +103,7 @@ public class DetailsActivity extends AppCompatActivity {
    // @BindView(R.id.ll_trailers)
     //LinearLayout trailerLayout;
     @BindView(R.id.rv_similar)
-    RecyclerView similarRcyclerView;
+    RecyclerView similarRecyclerView;
     @BindView(R.id.ll_similar)
     LinearLayout similarLayout;
     @BindView(R.id.rv_review)
@@ -139,19 +143,25 @@ public class DetailsActivity extends AppCompatActivity {
         if (extras != null)
             movie = extras.getParcelable(Constants.EXTRA_MOVIE_ITEM);
 
-        if (movie != null) {
+        if (movie != null){
+
+            List<String> genreName = movie.getGenreName();
 
             fetchCredits(movie.getId());
             //fetchTrailers(movie.getId());
             fetchReviews(movie.getId());
             fetchFirstTrailer(movie.getId());
+            fetchSimilar(movie.getId());
 
             movieTitle.setText(movie.getTitle());
             movieReleaseDate.setText(DateUtil.getFormattedDate(movie.getReleaseDate()));
             movieLanguage.setText(getLanguage(movie.getOriginalLanguage()));
             movieVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
             movieOverview.setText(String.valueOf(movie.getOverview()));
-            Log.d("runtime: ",  String.valueOf(movie.getRuntime()));
+            //movieGenres1.setText(genreName.get(0));
+            //movieGenres2.setText(genreName.get(1));
+            //Log.e("Genre: ", genreName.get(0));
+            //Log.e("Genre: ", genreName.get(1));
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 String imageTransitionName = extras.getString(Constants.EXTRA_MOVIE_IMAGE_TRANSITION_NAME);
@@ -417,7 +427,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private  void fetchSimilar(int movieId) {
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
-        Call<MovieSimilarResponse> call = restClientInterface.getSimilar(movieId, Constants.API_KEY);
+        Call<MovieSimilarResponse> call = restClientInterface.getSimilar(movieId, Constants.API_KEY, 1);
 
         if (call != null) {
             call.enqueue(new retrofit2.Callback<MovieSimilarResponse>() {
@@ -429,16 +439,16 @@ public class DetailsActivity extends AppCompatActivity {
                     if (statusCode == 200) {
                         if (response.body() != null) {
                             MovieSimilarResponse movieSimilarResponse = response.body();
-                            List<MovieSimilar> similar = movieSimilarResponse != null ? movieSimilarResponse.getSimilar() : null;
+                            final List<MovieSimilar> similar = movieSimilarResponse != null ? movieSimilarResponse.getSimilar() : null;
 
                             if (similar != null && similar.size() > 0) {
                                 RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(DetailsActivity.this,
                                         LinearLayoutManager.HORIZONTAL,
                                         false);
 
-                                similarRcyclerView.setLayoutManager(layoutManager);
-                                similarRcyclerView.setHasFixedSize(true);
-                                similarRcyclerView.setAdapter(new SimilarAdapter(similar));
+                                similarRecyclerView.setLayoutManager(layoutManager);
+                                similarRecyclerView.setHasFixedSize(true);
+                                similarRecyclerView.setAdapter(new SimilarAdapter(similar));
                             } else {
                                 similarLayout.setVisibility(View.GONE);
                             }

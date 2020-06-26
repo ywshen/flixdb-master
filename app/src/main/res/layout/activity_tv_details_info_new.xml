@@ -281,6 +281,28 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_similar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_cast"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:text="@string/similar"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/colorWhiteAlpha"
+                android:textStyle="bold" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_similar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/ll_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -6,6 +6,7 @@ import android.arch.persistence.room.DatabaseConfiguration;
 import android.arch.persistence.room.InvalidationTracker;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
+import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.util.Log;
 import com.streammovietv.model.Movie;
 
 @Database(entities = {Movie.class}, version = 1, exportSchema = false)
+@TypeConverters({Converters.class})
 public abstract class MovieDatabase extends RoomDatabase {
 
     private static final String TAG = MovieDatabase.class.getSimpleName();

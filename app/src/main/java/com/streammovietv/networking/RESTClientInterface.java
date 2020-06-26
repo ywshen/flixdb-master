@@ -12,6 +12,7 @@ import com.streammovietv.model.TvCreditResponse;
 import com.streammovietv.model.TvLang;
 import com.streammovietv.model.TvResponse;
 import com.streammovietv.model.TvReviewResponse;
+import com.streammovietv.model.TvSimilarResponse;
 import com.streammovietv.model.TvVideoResponse;
 import com.streammovietv.utilities.Constants;
 
@@ -69,7 +70,10 @@ public interface RESTClientInterface {
     Call<TvReviewResponse> getTvReviews(@Path("tv_id") int tvId, @Query("api_key") String apiKey);
 
     @GET(Constants.MOVIE_SIMILAR_URL)
-    Call<MovieSimilarResponse> getSimilar(@Path("movie_id") int movieId, @Query("api_key") String apiKey);
+    Call<MovieSimilarResponse> getSimilar(@Path("movie_id") int movieId, @Query("api_key") String apiKey, @Query("page") int page);
+
+    @GET(Constants.TV_SIMILAR_URL)
+    Call<TvSimilarResponse> getTvSimilar(@Path("movie_id") int tvId, @Query("api_key") String apiKey, @Query("page") int page);
 
     @GET(Constants.PERSON_URL)
     Call<Person> getPersonDetails(@Path("person_id") int personId, @Query("api_key") String apiKey);

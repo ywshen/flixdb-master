@@ -4,18 +4,18 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class MovieSimilarResponse {
+public class TvSimilarResponse {
     @SerializedName("id")
     private int id;
 
     @SerializedName("results")
-    private List<MovieSimilar> similar;
+    private List<TvSimilar> similar;
 
     public int getId() { return id; }
 
     public void setId(int id) { this.id = id; }
 
-    public List<MovieSimilar> getSimilar() { return similar; }
+    public List<TvSimilar> getSimilar() { return similar; }
 
-    public void setSimilar(List<MovieSimilar>similar) { this.similar = similar; }
+    public void setSimilar(List<TvSimilar>similar) { this.similar = similar; }
 }

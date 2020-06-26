@@ -29,6 +29,7 @@ import android.widget.Toast;
 import com.streammovietv.R;
 import com.streammovietv.adapter.TvCastAdapter;
 import com.streammovietv.adapter.TvReviewAdapter;
+import com.streammovietv.adapter.TvSimilarAdapter;
 import com.streammovietv.adapter.VideoAdapter;
 import com.streammovietv.database.AppExecutors;
 import com.streammovietv.database.TvDatabase;
@@ -40,6 +41,8 @@ import com.streammovietv.model.TvCreditResponse;
 import com.streammovietv.model.TvResponse;
 import com.streammovietv.model.TvReview;
 import com.streammovietv.model.TvReviewResponse;
+import com.streammovietv.model.TvSimilar;
+import com.streammovietv.model.TvSimilarResponse;
 import com.streammovietv.model.TvVideoResponse;
 import com.streammovietv.model.TvVideos;
 import com.streammovietv.networking.RESTClient;
@@ -61,7 +64,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class TvDetailsActivity extends AppCompatActivity {
+public class  TvDetailsActivity extends AppCompatActivity {
 
     private static final String TAG = TvDetailsActivity.class.getSimpleName();
 
@@ -93,6 +96,10 @@ public class TvDetailsActivity extends AppCompatActivity {
     //RecyclerView trailerRecyclerView;
     // @BindView(R.id.ll_trailers)
     //LinearLayout trailerLayout;
+    @BindView(R.id.rv_similar)
+    RecyclerView similarRecyclerView;
+    @BindView(R.id.ll_similar)
+    LinearLayout similarLayout;
     @BindView(R.id.rv_review)
     RecyclerView reviewRecyclerView;
     @BindView(R.id.ll_reviews)
@@ -110,7 +117,7 @@ public class TvDetailsActivity extends AppCompatActivity {
     ImageView star5;
     @BindView(R.id.PlayButton)
     FloatingActionButton PlayButton;
-    @BindView(R.id.movie_rating)
+    @BindView(R.id.tv_rating)
     ConstraintLayout tvRating;
 
     private AppBarLayout appBarLayout;
@@ -397,6 +404,46 @@ public class TvDetailsActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(@NonNull Call<MovieTrailerResponse> call, @NonNull Throwable throwable) {
+                    // Log error here since request failed
+                    Log.e(TAG, throwable.toString());
+                }
+            });
+        }
+    }
+
+    private  void fetchSimilar(int tvId) {
+        RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
+        Call<TvSimilarResponse> call = restClientInterface.getTvSimilar(tvId, Constants.API_KEY, 1);
+
+        if (call != null) {
+            call.enqueue(new retrofit2.Callback<TvSimilarResponse>() {
+                @Override
+                public void onResponse(@NonNull Call<TvSimilarResponse> call,
+                                       @NonNull Response<TvSimilarResponse> response) {
+                    int statusCode = response.code();
+
+                    if (statusCode == 200) {
+                        if (response.body() != null) {
+                            TvSimilarResponse tvSimilarResponse = response.body();
+                            final List<TvSimilar> similar = tvSimilarResponse != null ?tvSimilarResponse.getSimilar() : null;
+
+                            if (similar != null && similar.size() > 0) {
+                                RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(TvDetailsActivity.this,
+                                        LinearLayoutManager.HORIZONTAL,
+                                        false);
+
+                                similarRecyclerView.setLayoutManager(layoutManager);
+                                similarRecyclerView.setHasFixedSize(true);
+                                similarRecyclerView.setAdapter(new TvSimilarAdapter(similar));
+                            } else {
+                                similarLayout.setVisibility(View.GONE);
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(@NonNull Call<TvSimilarResponse> call, @NonNull Throwable throwable) {
                     // Log error here since request failed
                     Log.e(TAG, throwable.toString());
                 }

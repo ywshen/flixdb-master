@@ -45,6 +45,9 @@ public class Movie implements Parcelable {
     @Ignore
     @SerializedName("genre_ids")
     private List<Integer> genreIds;
+    @ColumnInfo(name = "genre_name")
+    @SerializedName("genre_name")
+    private List<String> genreName;
     @ColumnInfo(name = "original_title")
     @SerializedName("original_title")
     private String originalTitle;
@@ -73,7 +76,7 @@ public class Movie implements Parcelable {
     @SerializedName("runtime")
     private Integer runtime;
 
-    public Movie(String posterPath, boolean adult, String overview, String releaseDate, Integer id,
+    public Movie(String posterPath, boolean adult, String overview, String releaseDate, Integer id, List<String> genreName,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
                  Integer voteCount, Boolean video, Double voteAverage, Integer runtime) {
         this.posterPath = posterPath;
@@ -81,6 +84,7 @@ public class Movie implements Parcelable {
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.id = id;
+        this.genreName = genreName;
         this.originalTitle = originalTitle;
         this.originalLanguage = originalLanguage;
         this.title = title;
@@ -93,7 +97,7 @@ public class Movie implements Parcelable {
     }
 
     @Ignore
-    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, Integer id,
+    public Movie(String posterPath, boolean adult, String overview, String releaseDate, List<Integer> genreIds, List<String> genreName,
                  String originalTitle, String originalLanguage, String title, String backdropPath, Double popularity,
                  Integer voteCount, Boolean video, Double voteAverage, Integer runtime) {
         this.posterPath = posterPath;
@@ -101,6 +105,7 @@ public class Movie implements Parcelable {
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.genreIds = genreIds;
+        this.genreName = genreName;
         this.id = id;
         this.originalTitle = originalTitle;
         this.originalLanguage = originalLanguage;
@@ -143,6 +148,7 @@ public class Movie implements Parcelable {
         } else {
             id = in.readInt();
         }
+        in.readList(genreName, Movie.class.getClassLoader());
         originalTitle = in.readString();
         originalLanguage = in.readString();
         title = in.readString();
@@ -210,6 +216,10 @@ public class Movie implements Parcelable {
     public void setGenreIds(List<Integer> genreIds) {
         this.genreIds = genreIds;
     }
+
+    public List<String> getGenreName() { return genreName; }
+
+    public void setGenreName (List<String> genreName) { this.genreName = genreName; }
 
     public Integer getId() {
         return id;
@@ -304,6 +314,7 @@ public class Movie implements Parcelable {
             parcel.writeByte((byte) 1);
             parcel.writeInt(id);
         }
+        parcel.writeList(genreName);
         parcel.writeString(originalTitle);
         parcel.writeString(originalLanguage);
         parcel.writeString(title);
