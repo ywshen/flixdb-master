@@ -141,6 +141,7 @@ public class  TvDetailsActivity extends AppCompatActivity {
             //fetchTrailers(tv.getId());
             fetchReviews(tv.getId());
             fetchFirstTrailer(tv.getId());
+            fetchSimilar(tv.getId());
 
             tvName.setText(tv.getName());
             tvFirstAirDate.setText(DateUtil.getFormattedDate(tv.getFirstAirDate()));

@@ -73,7 +73,7 @@ public interface RESTClientInterface {
     Call<MovieSimilarResponse> getSimilar(@Path("movie_id") int movieId, @Query("api_key") String apiKey, @Query("page") int page);
 
     @GET(Constants.TV_SIMILAR_URL)
-    Call<TvSimilarResponse> getTvSimilar(@Path("movie_id") int tvId, @Query("api_key") String apiKey, @Query("page") int page);
+    Call<TvSimilarResponse> getTvSimilar(@Path("tv_id") int tvId, @Query("api_key") String apiKey, @Query("page") int page);
 
     @GET(Constants.PERSON_URL)
     Call<Person> getPersonDetails(@Path("person_id") int personId, @Query("api_key") String apiKey);

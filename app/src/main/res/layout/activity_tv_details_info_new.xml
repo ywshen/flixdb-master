@@ -284,7 +284,7 @@
             android:id="@+id/ll_similar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_cast"
+            android:layout_below="@+id/ll_episodes"
             android:orientation="vertical">
 
             <TextView
@@ -306,7 +306,7 @@
             android:id="@+id/ll_reviews"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_episodes"
+            android:layout_below="@+id/ll_similar"
             android:background="@color/colorBlackAlpha"
             android:orientation="vertical">
 
