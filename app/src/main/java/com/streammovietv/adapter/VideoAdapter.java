@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.streammovietv.R;
-import com.streammovietv.model.TvVideos;
 import com.squareup.picasso.Picasso;
+import com.streammovietv.model.TvVideo;
 
 import java.util.List;
 
@@ -23,9 +23,9 @@ import butterknife.ButterKnife;
 public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHolder> {
 
     private Context context;
-    private final List<TvVideos> videos;
+    private final List<TvVideo> videos;
 
-    public VideoAdapter(List<TvVideos> videos) {
+    public VideoAdapter(List<TvVideo> videos) {
         this.videos = videos;
     }
 
@@ -40,7 +40,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.VideoViewHol
 
     @Override
     public void onBindViewHolder(@NonNull VideoAdapter.VideoViewHolder holder, int position) {
-        final TvVideos tvCast = videos.get(position);
+        final TvVideo tvCast = videos.get(position);
 
         String imageURL = "http://img.youtube.com/vi/" + tvCast.getVideoKey() + "/mqdefault.jpg";
         Picasso.with(context)

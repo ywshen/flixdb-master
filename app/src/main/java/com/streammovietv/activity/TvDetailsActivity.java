@@ -43,8 +43,8 @@ import com.streammovietv.model.TvReview;
 import com.streammovietv.model.TvReviewResponse;
 import com.streammovietv.model.TvSimilar;
 import com.streammovietv.model.TvSimilarResponse;
+import com.streammovietv.model.TvVideo;
 import com.streammovietv.model.TvVideoResponse;
-import com.streammovietv.model.TvVideos;
 import com.streammovietv.networking.RESTClient;
 import com.streammovietv.networking.RESTClientInterface;
 import com.streammovietv.utilities.AppBarStateChangedListener;
@@ -375,27 +375,27 @@ public class  TvDetailsActivity extends AppCompatActivity {
 
     private void fetchFirstTrailer(int movieId){
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
-        Call<MovieTrailerResponse> call = restClientInterface.getTrailers(movieId, Constants.API_KEY);
+        Call<TvVideoResponse> call = restClientInterface.getVideos(movieId, Constants.API_KEY);
 
         if (call != null) {
-            call.enqueue(new retrofit2.Callback<MovieTrailerResponse>() {
+            call.enqueue(new retrofit2.Callback<TvVideoResponse>() {
                 @Override
-                public void onResponse(@NonNull Call<MovieTrailerResponse> call,
-                                       @NonNull Response<MovieTrailerResponse> response) {
+                public void onResponse(@NonNull Call<TvVideoResponse> call,
+                                       @NonNull Response<TvVideoResponse> response) {
                     int statusCode = response.code();
 
                     if (statusCode == 200) {
                         if (response.body() != null) {
-                            MovieTrailerResponse movieTrailerResponse = response.body();
-                            final List<MovieTrailer> trailers = movieTrailerResponse != null ? movieTrailerResponse.getTrailers() : null;
+                            TvVideoResponse tvVideoResponse = response.body();
+                            final List<TvVideo> videos = tvVideoResponse != null ? tvVideoResponse.getVideo() : null;
 
-                            if (trailers != null && trailers.size() > 0) {
+                            if (videos != null && videos.size() > 0) {
                                 playTrailer.setText("Play Trailer");
                                 PlayButton.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
                                         context.startActivity(new Intent(Intent.ACTION_VIEW,
-                                                Uri.parse("vnd.youtube://" + trailers.get(0).getVideoKey())));
+                                                Uri.parse("vnd.youtube://" + videos.get(0).getVideoKey())));
                                     }
                                 });
                             }
@@ -404,7 +404,7 @@ public class  TvDetailsActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(@NonNull Call<MovieTrailerResponse> call, @NonNull Throwable throwable) {
+                public void onFailure(@NonNull Call<TvVideoResponse> call, @NonNull Throwable throwable) {
                     // Log error here since request failed
                     Log.e(TAG, throwable.toString());
                 }

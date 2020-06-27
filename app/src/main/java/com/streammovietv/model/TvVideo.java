@@ -2,7 +2,7 @@ package com.streammovietv.model;
 
 import com.google.gson.annotations.SerializedName;
 
-public class TvVideos {
+public class TvVideo {
 
     @SerializedName("id")
     private String videoId;
