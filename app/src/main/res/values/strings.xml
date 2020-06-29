@@ -18,6 +18,7 @@
     <string name="trailers">Trailers</string>
     <string name="episodes">Episodes</string>
     <string name="similar">Related Movies</string>
+    <string name ="similarTv">Rlated TV Shows</string>
     <string name="reviews">Reviews</string>
 
     <string name="isTapToTargetShown">is Tap To Target Shown</string>
