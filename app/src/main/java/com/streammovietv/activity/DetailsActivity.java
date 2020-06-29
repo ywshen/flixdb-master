@@ -23,6 +23,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -76,6 +77,10 @@ public class DetailsActivity extends AppCompatActivity {
     ImageView movieBackdrop;
     @BindView(R.id.tv_movie_title)
     TextView movieTitle;
+    @BindView(R.id.tv_movie_title2)
+    TextView movieTitle2;
+    @BindView(R.id.tv_movie_title3)
+    TextView movieTitle3;
     @BindView(R.id.tv_movie_release_date)
     TextView movieReleaseDate;
     @BindView(R.id.tv_movie_language)
@@ -152,8 +157,7 @@ public class DetailsActivity extends AppCompatActivity {
             fetchReviews(movie.getId());
             fetchFirstTrailer(movie.getId());
             fetchSimilar(movie.getId());
-
-            movieTitle.setText(movie.getTitle());
+            multiLineTitle(movieTitle, movieTitle2, movieTitle3, movie.getTitle());
             movieReleaseDate.setText(DateUtil.getFormattedDate(movie.getReleaseDate()));
             movieLanguage.setText(getLanguage(movie.getOriginalLanguage()));
             movieVoteAverage.setText(String.valueOf(movie.getVoteAverage()));
@@ -549,5 +553,43 @@ public class DetailsActivity extends AppCompatActivity {
             star4.setImageResource(R.drawable.star);
             star5.setImageResource(R.drawable.star);
         }
+    }
+
+    private void multiLineTitle (final TextView movieTitle, final TextView movieTitle2, final TextView movieTitle3, final String title) {
+
+        movieTitle.setText(title);
+
+        movieTitle.post(new Runnable() {
+            @Override
+            public void run() {
+                int lineCnt = movieTitle.getLineCount();
+
+                if (lineCnt == 1) {
+                    movieTitle.setText(" ");
+                    movieTitle2.setText(title);
+                    movieTitle3.setText(" ");
+                    Log.e("Line: ",  String.valueOf(1));
+                }
+                if (lineCnt == 2) {
+                    movieTitle.setText(" ");
+                    movieTitle2.setText(" ");
+                    movieTitle3.setText(title);
+                    Log.e("Line: ", String.valueOf(2));
+                }
+                if (lineCnt == 3) {
+                    movieTitle.setTextSize(25);
+                    movieTitle.setText(title);
+                    movieTitle2.setText(" ");
+                    movieTitle3.setText(" ");
+                    Log.e("Line: ", String.valueOf(3));
+                }
+                if (lineCnt > 3) {
+                    movieTitle.setText(title);
+                    movieTitle2.setText(" ");
+                    movieTitle3.setText(" ");
+                    Log.e("Line: ", String.valueOf(4));
+                }
+            }
+        });
     }
 }

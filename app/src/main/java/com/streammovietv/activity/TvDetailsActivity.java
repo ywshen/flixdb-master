@@ -74,6 +74,10 @@ public class  TvDetailsActivity extends AppCompatActivity {
     ImageView tvBackdrop;
     @BindView(R.id.tv_movie_title)
     TextView tvName;
+    @BindView(R.id.tv_movie_title2)
+    TextView tvName2;
+    @BindView(R.id.tv_movie_title3)
+    TextView tvName3;
     @BindView(R.id.tv_movie_release_date)
     TextView tvFirstAirDate;
     @BindView(R.id.tv_movie_language)
@@ -143,7 +147,7 @@ public class  TvDetailsActivity extends AppCompatActivity {
             fetchFirstTrailer(tv.getId());
             fetchSimilar(tv.getId());
 
-            tvName.setText(tv.getName());
+            multiLineTitle(tvName, tvName2, tvName3, tv.getName());
             tvFirstAirDate.setText(DateUtil.getFormattedDate(tv.getFirstAirDate()));
             tvLanguage.setText(getLanguage(tv.getOriginalLanguage()));
             tvVoteAverage.setText(String.valueOf(tv.getVoteAverage()));
@@ -534,5 +538,43 @@ public class  TvDetailsActivity extends AppCompatActivity {
             star4.setImageResource(R.drawable.star);
             star5.setImageResource(R.drawable.star);
         }
+    }
+
+    private void multiLineTitle (final TextView movieTitle, final TextView movieTitle2, final TextView movieTitle3, final String title) {
+
+        movieTitle.setText(title);
+
+        movieTitle.post(new Runnable() {
+            @Override
+            public void run() {
+                int lineCnt = movieTitle.getLineCount();
+
+                if (lineCnt == 1) {
+                    movieTitle.setText(" ");
+                    movieTitle2.setText(title);
+                    movieTitle3.setText(" ");
+                    Log.e("Line: ",  String.valueOf(1));
+                }
+                if (lineCnt == 2) {
+                    movieTitle.setText(" ");
+                    movieTitle2.setText(" ");
+                    movieTitle3.setText(title);
+                    Log.e("Line: ", String.valueOf(2));
+                }
+                if (lineCnt == 3) {
+                    movieTitle.setTextSize(25);
+                    movieTitle.setText(title);
+                    movieTitle2.setText(" ");
+                    movieTitle3.setText(" ");
+                    Log.e("Line: ", String.valueOf(3));
+                }
+                if (lineCnt > 3) {
+                    movieTitle.setText(title);
+                    movieTitle2.setText(" ");
+                    movieTitle3.setText(" ");
+                    Log.e("Line: ", String.valueOf(4));
+                }
+            }
+        });
     }
 }
