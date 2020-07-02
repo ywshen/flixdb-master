@@ -83,6 +83,12 @@ public class CastActivity extends AppCompatActivity {
         setTitle(R.string.cast);
     }
 
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
     private void fetchPerson(int personId) {
         RESTClientInterface restClientInterface = RESTClient.getClient().create(RESTClientInterface.class);
         Call<Person> call = restClientInterface.getPersonDetails(personId, Constants.API_KEY);

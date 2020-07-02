@@ -36,6 +36,9 @@
         <activity
             android:name="com.streammovietv.activity.CastActivity"
             android:label="@string/cast" />
+        <activity
+            android:name="com.streammovietv.activity.TvCastActivity"
+            android:label="@string/cast" />
     </application>
 
 </manifest>
