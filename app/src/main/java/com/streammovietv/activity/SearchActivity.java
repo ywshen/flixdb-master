@@ -101,7 +101,7 @@ public class SearchActivity extends AppCompatActivity implements
                 searchQuery = query;
                 resetData();
                 fetchSearches(mCallPage, searchQuery);
-                return true;
+                return false;
             }
 
             @Override
